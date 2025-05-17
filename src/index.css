@@ -18,10 +18,24 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Glowing effect for feature cards */
-.feature-card:hover {
-  box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.5);
+/* Hero Section Enhancements */
+.hero-title {
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.hero-button:hover {
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
   transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Feature Card Enhancements */
+.feature-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 @keyframes glow {
@@ -32,4 +46,128 @@ html {
 
 .feature-card:hover {
   animation: glow 1.5s infinite;
+}
+
+/* How It Works Card Enhancements */
+.how-it-works-card {
+  position: relative;
+  padding-left: 3rem;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.how-it-works-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.how-it-works-card::before {
+  content: attr(data-step);
+  position: absolute;
+  left: 1rem;
+  top: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #FFD700;
+  opacity: 0.8;
+}
+
+/* Ensure cards have a subtle border */
+.how-it-works-card {
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+/* CTA Button Enhancements */
+.cta-button {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.cta-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+}
+/* Testimonial Card Enhancements */
+.testimonial-card {
+  position: relative;
+  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.testimonial-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.testimonial-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, #FFD700, #D3D3D3);
+  opacity: 0.8;
+}
+/* Benefit Card Enhancements */
+.benefit-card {
+  position: relative;
+  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.benefit-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+}
+
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, #FFD700, #D3D3D3);
+  opacity: 0.9;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 2.5rem; /* Smaller title on mobile */
+  }
+
+  .hero-button, .cta-button {
+    padding: 0.75rem 1.5rem; /* Smaller buttons on mobile */
+    font-size: 1rem;
+  }
+
+  .feature-card, .how-it-works-card, .testimonial-card, .benefit-card {
+    padding: 1rem; /* Reduced padding on mobile */
+  }
+
+  .how-it-works-card {
+    padding-left: 2rem; /* Adjust for step number */
+  }
+
+  .how-it-works-card::before {
+    font-size: 1.25rem; /* Smaller step number on mobile */
+    left: 0.5rem;
+    top: 1rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  .hero-title {
+    font-size: 4rem; /* Medium title on tablets */
+  }
+
+  .feature-card, .how-it-works-card, .testimonial-card, .benefit-card {
+    padding: 1.5rem; /* Slightly larger padding on tablets */
+  }
+}
+/* Main Container Background */
+.main-container {
+  position: relative;
+  background: linear-gradient(to bottom, rgba(26, 26, 26, 0.9), rgba(10, 10, 10, 1)), url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cg fill="%23FFD700" fill-opacity="0.05"%3E%3Ccircle cx="50" cy="50" r="10"/%3E%3C/g%3E%3C/svg%3E');
+  background-size: 100px 100px;
 }
