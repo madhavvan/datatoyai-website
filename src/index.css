@@ -5,59 +5,145 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Premium Color Palette */
+:root {
+  --cosmic-black: #02020A;
+  --dark-gray: #1A1A1A;
+  --gold: #FFD700;
+  --silver-white: #E8ECEF;
+  --neon-cyan: #00DDEB;
+}
+
+/* Global Styles */
 body {
-  background-color: #0a0a0a;
-  color: #ffffff;
+  background-color: var(--cosmic-black);
+  color: var(--silver-white);
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
-/* Smooth scrolling for the entire app */
+/* Smooth Scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Hero Section Enhancements */
-.hero-title {
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+/* Main Container */
+.main-container {
+  position: relative;
+  background: var(--cosmic-black);
 }
 
-.hero-button:hover {
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+/* Navbar */
+nav {
+  box-shadow: 0 0 20px rgba(0, 221, 235, 0.3);
+}
+
+nav a:hover {
+  text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+/* Logo */
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo-icon:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px rgba(0, 221, 235, 0.5));
+}
+
+@media (max-width: 640px) {
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Hero Section */
+.hero-section-background {
+  background: radial-gradient(ellipse at center, rgba(2, 2, 10, 0.9) 0%, var(--cosmic-black) 70%);
+  overflow: hidden;
+}
+
+.hero-title {
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.7), 0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+.typing-text {
+  color: var(--silver-white);
+  text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.typing-text::after {
+  content: '|';
+  display: inline-block;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.hero-button {
+  position: relative;
+  overflow: hidden;
   transition: box-shadow 0.3s ease-in-out;
 }
 
-/* Feature Card Enhancements */
-.feature-card {
+.hero-button:hover {
+  box-shadow: 0 0 25px rgba(0, 221, 235, 0.8), 0 0 40px rgba(0, 221, 235, 0.4);
+}
+
+.hero-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(0, 221, 235, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease, height 0.5s ease;
+}
+
+.hero-button:hover::after {
+  width: 200px;
+  height: 200px;
+}
+
+/* Data Sphere */
+.data-sphere {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.feature-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+.glass-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 221, 235, 0.3);
 }
 
-@keyframes glow {
-  0% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.7); }
-  100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); }
-}
-
-.feature-card:hover {
-  animation: glow 1.5s infinite;
-}
-
-/* How It Works Card Enhancements */
 .how-it-works-card {
   position: relative;
   padding-left: 3rem;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.how-it-works-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .how-it-works-card::before {
@@ -67,107 +153,109 @@ html {
   top: 1.5rem;
   font-size: 1.5rem;
   font-weight: bold;
-  color: #FFD700;
-  opacity: 0.8;
+  color: var(--gold);
+  opacity: 0.9;
 }
 
-/* Ensure cards have a subtle border */
-.how-it-works-card {
-  border: 1px solid rgba(255, 215, 0, 0.2);
+/* Benefit Icons */
+.benefit-icon {
+  width: 36px;
+  height: 36px;
+  stroke: var(--gold);
+  fill: none;
+  transition: stroke 0.3s ease, transform 0.3s ease;
 }
 
-/* CTA Button Enhancements */
+.glass-card:hover .benefit-icon {
+  stroke: var(--neon-cyan);
+  transform: scale(1.1);
+}
+
+/* CTA Button */
 .cta-button {
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease-in-out;
 }
 
 .cta-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
-}
-/* Testimonial Card Enhancements */
-.testimonial-card {
-  position: relative;
-  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 0 25px rgba(0, 221, 235, 0.8), 0 0 40px rgba(0, 221, 235, 0.4);
 }
 
-.testimonial-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-}
-
-.testimonial-card::before {
+.cta-button::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(to right, #FFD700, #D3D3D3);
-  opacity: 0.8;
-}
-/* Benefit Card Enhancements */
-.benefit-card {
-  position: relative;
-  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(0, 221, 235, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease, height 0.5s ease;
 }
 
-.benefit-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+.cta-button:hover::after {
+  width: 200px;
+  height: 200px;
 }
 
-.benefit-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(to right, #FFD700, #D3D3D3);
-  opacity: 0.9;
+/* Footer */
+footer {
+  background: var(--cosmic-black);
+  border-top: 1px solid var(--gold);
+}
+
+footer a:hover {
+  text-shadow: 0 0 10px var(--neon-cyan);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 640px) {
   .hero-title {
-    font-size: 2.5rem; /* Smaller title on mobile */
+    font-size: 2.8rem;
   }
 
   .hero-button, .cta-button {
-    padding: 0.75rem 1.5rem; /* Smaller buttons on mobile */
+    padding: 0.8rem 1.6rem;
     font-size: 1rem;
   }
 
-  .feature-card, .how-it-works-card, .testimonial-card, .benefit-card {
-    padding: 1rem; /* Reduced padding on mobile */
+  .glass-card {
+    padding: 1rem;
   }
 
   .how-it-works-card {
-    padding-left: 2rem; /* Adjust for step number */
+    padding-left: 2.5rem;
   }
 
   .how-it-works-card::before {
-    font-size: 1.25rem; /* Smaller step number on mobile */
-    left: 0.5rem;
-    top: 1rem;
+    font-size: 1.25rem;
+    left: 0.75rem;
+    top: 1.25rem;
+  }
+
+  nav .flex.space-x-6 {
+    display: none; /* Hide navbar links on mobile */
+  }
+
+  .benefit-icon {
+    width: 28px;
+    height: 28px;
   }
 }
 
 @media (min-width: 641px) and (max-width: 1023px) {
   .hero-title {
-    font-size: 4rem; /* Medium title on tablets */
+    font-size: 4.5rem;
   }
 
-  .feature-card, .how-it-works-card, .testimonial-card, .benefit-card {
-    padding: 1.5rem; /* Slightly larger padding on tablets */
+  .glass-card {
+    padding: 1.5rem;
   }
-}
-/* Main Container Background */
-.main-container {
-  position: relative;
-  background: linear-gradient(to bottom, rgba(26, 26, 26, 0.9), rgba(10, 10, 10, 1)), url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cg fill="%23FFD700" fill-opacity="0.05"%3E%3Ccircle cx="50" cy="50" r="10"/%3E%3C/g%3E%3C/svg%3E');
-  background-size: 100px 100px;
+
+  .benefit-icon {
+    width: 32px;
+    height: 32px;
+  }
 }
