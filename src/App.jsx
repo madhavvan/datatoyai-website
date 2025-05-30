@@ -291,6 +291,7 @@ function App() {
             />
           </motion.p>
           <motion.button
+            href="https://app.datatoyai.com"
             className="px-8 py-4 bg-gold text-cosmic-black font-inter rounded-lg shadow-lg text-lg font-medium hero-button"
             variants={buttonVariants}
             whileHover="hover"
