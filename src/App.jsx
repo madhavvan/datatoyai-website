@@ -395,6 +395,7 @@ function App() {
             Upload your dataset, clean it with AI precision, and unlock powerful insights and predictions in minutes. Try DataToyAI now and transform your data workflow.
           </motion.p>
           <motion.a
+            href="https://app.datatoyai.com"
             className="inline-block px-8 py-4 bg-gold text-cosmic-black font-inter rounded-lg shadow-lg text-lg font-medium cta-button"
             variants={buttonVariants}
             whileHover="hover"
