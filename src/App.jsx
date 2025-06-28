@@ -306,7 +306,7 @@ const HayChatbot = () => {
   const chatRef = useRef(null);
 
   // Use environment variable for API key
-  const API_KEY = process.env.XAI_API_KEY || 'xai-clgceSmL1twlI8XSyXC4pvs3xWx38F8MdVeFp4oiTHwIFF9sLPDicaettsOW6cZshBHUUH3N3KfaeMGR';
+  const API_KEY = process.env.XAI_API_KEY || 'xai-new-key-placeholder'; // Placeholder for local testing, overridden by Vercel env
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -331,14 +331,14 @@ const HayChatbot = () => {
         body: JSON.stringify({
           model: 'grok',
           messages: [
-            { role: 'system', content: 'You are Hay, an advanced AI assistant for DataToyAI, designed to provide professional, detailed, and context-aware answers on data cleaning, analytics, predictive modeling, and related topics. Respond like Grok 4 with deep reasoning, concise yet comprehensive insights, practical examples, step-by-step guidance, and a helpful tone.' },
+            { role: 'system', content: 'You are Hay, an advanced AI assistant for DataToyAI, designed to provide professional, detailed, and context-aware answers on data cleaning, analytics, predictive modeling, and related topics. Respond like Grok 4 with deep reasoning, concise yet comprehensive insights, practical examples, step-by-step guidance, and a helpful tone, tailored to DataToyAI users.' },
             ...apiMessages,
           ],
-          max_tokens: 500, // Increased for detailed Grok 4-like responses
-          temperature: 0.6, // Balanced for coherent, professional responses
-          top_p: 0.9, // Focus on high-probability tokens for quality
-          frequency_penalty: 0.2, // Reduce repetition for better flow
-          presence_penalty: 0.2, // Encourage diverse responses
+          max_tokens: 500,
+          temperature: 0.6,
+          top_p: 0.9,
+          frequency_penalty: 0.2,
+          presence_penalty: 0.2,
         }),
       });
 
@@ -547,7 +547,6 @@ function App() {
             className="relative z-10 flex flex-col items-center justify-center"
             variants={heroVariants}
           >
-<<<<<<< HEAD
             <motion.h1
               className="text-6xl md:text-8xl font-playfair text-gold mb-4 hero-title"
               animate={{
@@ -581,25 +580,6 @@ function App() {
             </motion.button>
           </motion.div>
         </motion.section>
-=======
-            <TypingEffect
-              words={["Clean Data with AI", "Unlock Stellar Insights", "Predict the Future"]}
-              speed={80}
-              loop={true}
-            />
-          </motion.p>
-          <motion.button
-            href="https://app.datatoyai.com"
-            className="px-8 py-4 bg-gold text-cosmic-black font-inter rounded-lg shadow-lg text-lg font-medium hero-button"
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-          >
-            Start Cleaning Your Data
-          </motion.button>
-        </motion.div>
-      </motion.section>
->>>>>>> 2cab64c35cd9f7008403de80f525f5f45e900923
 
         <section id="features" className="py-16 px-4 bg-cosmic-black">
           <h2 className="text-4xl font-playfair text-gold text-center mb-12">Why Choose DataToyAI?</h2>
@@ -720,69 +700,12 @@ function App() {
               whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
               viewport={{ once: true }}
             >
-<<<<<<< HEAD
               Get Started with DataToyAI Today
             </motion.h2>
             <motion.p
               className="text-lg md:text-xl font-inter text-silver-white mb-8 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2 } }}
-=======
-              <h3 className="text-xl font-playfair text-gold mb-2">{title}</h3>
-              <p className="text-silver-white font-inter">{desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Call-to-Action Section */}
-      <section id="cta" className="py-16 px-4 bg-cosmic-black">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.h2
-            className="text-4xl md:text-5xl font-playfair text-gold mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
-            viewport={{ once: true }}
-          >
-            Get Started with DataToyAI Today
-          </motion.h2>
-          <motion.p
-            className="text-lg md:text-xl font-inter text-silver-white mb-8 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2 } }}
-            viewport={{ once: true }}
-          >
-            Upload your dataset, clean it with AI precision, and unlock powerful insights and predictions in minutes. Try DataToyAI now and transform your data workflow.
-          </motion.p>
-          <motion.a
-            href="https://app.datatoyai.com"
-            className="inline-block px-8 py-4 bg-gold text-cosmic-black font-inter rounded-lg shadow-lg text-lg font-medium cta-button"
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-          >
-            Try DataToyAI Now
-          </motion.a>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-16 px-4 bg-gradient-to-b from-dark-gray to-cosmic-black">
-        <h2 className="text-4xl font-playfair text-gold text-center mb-12">What Users Are Doing with DataToyAI</h2>
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { title: "Healthcare Insights", desc: "Analyzed thyroid patient data, cleaned missing values with AI suggestions, and visualized correlations to identify key health trends." },
-            { title: "Business Forecasting", desc: "Uploaded sales data, used time series forecasting to predict future trends, and created interactive charts for stakeholder presentations." },
-            { title: "Data Science Research", desc: "Generated synthetic datasets for classification tasks and trained ML models with one-click deployment to accelerate research." },
-          ].map(({ title, desc }, index) => (
-            <motion.div
-              key={title}
-              className="p-6 glass-card"
-              custom={index}
-              initial="hidden"
-              whileInView="visible"
-              variants={cardVariants}
->>>>>>> 2cab64c35cd9f7008403de80f525f5f45e900923
               viewport={{ once: true }}
             >
               Upload your dataset, clean it with AI precision, and unlock powerful insights and predictions in minutes. Try DataToyAI now and transform your data workflow.
