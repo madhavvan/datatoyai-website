@@ -329,21 +329,25 @@ const HayChatbot = () => {
           'Authorization': `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
-          model: "grok-3-latest",
+          model: 'grok-3',
           messages: [
-            { role: 'system', content: 'You are Hay, an advanced AI assistant for DataToyAI, designed to provide professional, detailed, and context-aware answers on data cleaning, analytics, predictive modeling, and related topics. Respond like Grok 4 with deep reasoning, concise yet comprehensive insights, practical examples, step-by-step guidance, and a helpful tone, tailored to DataToyAI users.' },
+            { role: 'system', content: 'You are Hay, an advanced AI assistant for DataToyAI, designed to provide professional, detailed, and context-aware answers on data cleaning, analytics, predictive modeling, and related topics. Respond with deep reasoning, concise insights, practical examples, and a helpful tone. For greetings or unclear inputs, offer a friendly welcome or prompt for more details.' },
             ...apiMessages,
           ],
-          max_tokens: 500,
-          temperature: 0.6,
-          top_p: 0.9,
-          frequency_penalty: 0.2,
-          presence_penalty: 0.2,
+          max_tokens: 300, // Simplified for testing
         }),
       });
 
       if (!response.ok) {
-        throw new Error(`API request failed: ${response.statusText}`);
+        const errorText = await response.text();
+        console.log('API Response:', {
+          status: response.status,
+          statusText: response.statusText,
+          errorText: errorText,
+          url: response.url,
+          body: JSON.stringify({ model: 'grok-3', messages: apiMessages, max_tokens: 300 }),
+        });
+        throw new Error(`API request failed: ${response.status} - ${errorText || 'No detailed error provided'}`);
       }
 
       const data = await response.json();
@@ -353,7 +357,7 @@ const HayChatbot = () => {
       console.error('Error fetching from xAI API:', error);
       setMessages((prev) => [
         ...prev,
-        { sender: 'Hay', text: 'Apologies, an error occurred. Please try again later or visit the "How It Works" section for assistance.' },
+        { sender: 'Hay', text: `Sorry, I encountered an issue (${error.message}). Please try again or check the "How It Works" section.` },
       ]);
     } finally {
       setIsLoading(false);
