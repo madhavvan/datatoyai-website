@@ -55,21 +55,10 @@ const benefits = [
 // DataSphere Component
 const DataSphere = memo(() => {
   const canvasRef = useRef(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const rotationRef = useRef({ xAngle: 0, yAngle: 0 });
   const { scrollY } = useScroll();
   const yParallax = useTransform(scrollY, [0, 300], [0, 50]);
 
   useEffect(() => {
-    const debounce = (func, delay) => {
-      let timeout;
-      return function (...args) {
-        const context = this;
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(context, args), delay);
-      };
-    };
-
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
@@ -84,17 +73,18 @@ const DataSphere = memo(() => {
       ctx.scale(dpr, dpr);
     };
 
+    const debounce = (func, delay) => {
+      let timeout;
+      return function (...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), delay);
+      };
+    };
+
     const debouncedSetCanvasSize = debounce(setCanvasSize, 250);
     window.addEventListener('resize', debouncedSetCanvasSize);
     setCanvasSize();
-
-    const handleMouseMove = (event) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - 0.5;
-      const y = (event.clientY - rect.top) / rect.height - 0.5;
-      setMousePos({ x, y });
-    };
-    canvas.addEventListener('mousemove', handleMouseMove);
 
     const nodes = [];
     const numNodes = 80;
@@ -126,8 +116,6 @@ const DataSphere = memo(() => {
       speed: Math.random() * 0.5 + 0.2,
     }));
 
-    let targetXAngle = 0;
-    let targetYAngle = 0;
     let autoRotateAngle = 0;
 
     const draw = (time) => {
@@ -162,22 +150,17 @@ const DataSphere = memo(() => {
 
       autoRotateAngle += 0.005;
 
-      targetXAngle = mousePos.y * Math.PI * 0.5;
-      targetYAngle = mousePos.x * Math.PI * 0.5;
-      rotationRef.current.xAngle += (targetXAngle - rotationRef.current.xAngle) * 0.1;
-      rotationRef.current.yAngle += (targetYAngle - rotationRef.current.yAngle) * 0.1;
-
       ctx.save();
       ctx.translate(canvas.offsetWidth / 2, canvas.offsetHeight / 2);
 
       nodes.sort((a, b) => b.z - a.z);
 
       nodes.forEach(node => {
-        const combinedYAngle = rotationRef.current.yAngle + autoRotateAngle;
+        const combinedYAngle = autoRotateAngle;
         const rotX1 = Math.cos(combinedYAngle) * node.baseX + Math.sin(combinedYAngle) * node.baseZ;
         const rotZ1 = -Math.sin(combinedYAngle) * node.baseX + Math.cos(combinedYAngle) * node.baseZ;
-        const rotY2 = Math.cos(rotationRef.current.xAngle) * node.baseY - Math.sin(rotationRef.current.xAngle) * rotZ1;
-        const rotZ2 = Math.sin(rotationRef.current.xAngle) * node.baseY + Math.cos(rotationRef.current.xAngle) * rotZ1;
+        const rotY2 = node.baseY;
+        const rotZ2 = rotZ1;
 
         node.x = rotX1;
         node.y = rotY2;
@@ -250,10 +233,9 @@ const DataSphere = memo(() => {
 
     return () => {
       window.removeEventListener('resize', debouncedSetCanvasSize);
-      canvas.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [mousePos.x, mousePos.y]); // Fixed dependency array
+  }, []); // No cursor dependencies, only auto-rotation
 
   return <motion.canvas ref={canvasRef} className="data-sphere" style={{ y: yParallax }} />;
 });
