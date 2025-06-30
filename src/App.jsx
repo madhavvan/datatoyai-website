@@ -306,16 +306,7 @@ const HayChatbot = () => {
   const chatRef = useRef(null);
 
   // Use environment variable for API key
-  const API_KEY = process.env.XAI_API_KEY;
-  if (!API_KEY) {
-    console.error('XAI_API_KEY is not set in environment variables');
-    setMessages((prev) => [
-      ...prev,
-      { sender: 'Hay', text: 'Sorry, the API key is missing. Please contact support to configure it.' },
-    ]);
-    setIsLoading(false);
-    return null; // Prevent rendering if key is missing
-  }
+  const API_KEY = process.env.XAI_API_KEY || 'xai-new-key-placeholder'; // Placeholder for local testing, overridden by Vercel env
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -338,13 +329,12 @@ const HayChatbot = () => {
           'Authorization': `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'grok-3-latest', // Updated to match curl
+          model: 'grok-3',
           messages: [
             { role: 'system', content: 'You are Hay, an advanced AI assistant for DataToyAI, designed to provide professional, detailed, and context-aware answers on data cleaning, analytics, predictive modeling, and related topics. Respond with deep reasoning, concise insights, practical examples, and a helpful tone. For greetings or unclear inputs, offer a friendly welcome or prompt for more details.' },
             ...apiMessages,
           ],
-          max_tokens: 300,
-          temperature: 0.7, // Match curl
+          max_tokens: 300, // Simplified for testing
         }),
       });
 
@@ -355,7 +345,7 @@ const HayChatbot = () => {
           statusText: response.statusText,
           errorText: errorText,
           url: response.url,
-          body: JSON.stringify({ model: 'grok-3-latest', messages: apiMessages, max_tokens: 300, temperature: 0.7 }),
+          body: JSON.stringify({ model: 'grok-3', messages: apiMessages, max_tokens: 300 }),
         });
         throw new Error(`API request failed: ${response.status} - ${errorText || 'No detailed error provided'}`);
       }
