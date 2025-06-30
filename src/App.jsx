@@ -320,7 +320,18 @@ const HayChatbot = () => {
       role: msg.sender === 'Hay' ? 'assistant' : 'user',
       content: msg.text,
     })).concat({ role: 'user', content: input });
+const handleSend = async () => {
+  if (!input.trim()) return;
+  const userMessage = { sender: 'You', text: input };
+  setMessages((prev) => [...prev, userMessage]);
+  setInput('');
+  setIsLoading(true);
 
+  // --- ADD THIS LINE FOR DEBUGGING ---
+  console.log('Attempting to use API Key:', API_KEY);
+
+  // Prepare conversation history for context
+  const apiMessages = messages.map((msg) => ({
     try {
       const response = await fetch('https://api.x.ai/v1/chat/completions', {
         method: 'POST',
