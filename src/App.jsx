@@ -295,7 +295,7 @@ const TypingEffect = memo(({ words, speed = 100, loop = true }) => {
   return <span className="typing-text">{text}</span>;
 });
 
-// Hay Chatbot Component
+// HayChatbot Component
 const HayChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -305,8 +305,16 @@ const HayChatbot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const chatRef = useRef(null);
 
-  // Use environment variable for API key
-  const API_KEY = process.env.XAI_API_KEY || 'xai-new-key-placeholder'; // Placeholder for local testing, overridden by Vercel env
+  // Use environment variable for API key with validation
+  const API_KEY = process.env.XAI_API_KEY;
+  if (!API_KEY) {
+    console.error('XAI_API_KEY is not set in environment variables');
+    return (
+      <div className="fixed bottom-8 right-8 p-4 bg-red-500 text-white rounded-full z-50">
+        API Key Missing - Contact Support
+      </div>
+    ); // Render placeholder instead of null
+  }
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -315,7 +323,6 @@ const HayChatbot = () => {
     setInput('');
     setIsLoading(true);
 
-    // Prepare conversation history for context
     const apiMessages = messages.map((msg) => ({
       role: msg.sender === 'Hay' ? 'assistant' : 'user',
       content: msg.text,
@@ -329,12 +336,13 @@ const HayChatbot = () => {
           'Authorization': `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'grok-3-latest',
+          model: 'grok-3-latest', // Matches Postman test
           messages: [
             { role: 'system', content: 'You are Hay, an advanced AI assistant for DataToyAI, designed to provide professional, detailed, and context-aware answers on data cleaning, analytics, predictive modeling, and related topics. Respond with deep reasoning, concise insights, practical examples, and a helpful tone. For greetings or unclear inputs, offer a friendly welcome or prompt for more details.' },
             ...apiMessages,
           ],
-          max_tokens: 300, // Simplified for testing
+          max_tokens: 300,
+          temperature: 0.7, // Matches Postman
         }),
       });
 
@@ -345,7 +353,7 @@ const HayChatbot = () => {
           statusText: response.statusText,
           errorText: errorText,
           url: response.url,
-          body: JSON.stringify({ model: 'grok-3', messages: apiMessages, max_tokens: 300 }),
+          body: JSON.stringify({ model: 'grok-3-latest', messages: apiMessages, max_tokens: 300, temperature: 0.7 }),
         });
         throw new Error(`API request failed: ${response.status} - ${errorText || 'No detailed error provided'}`);
       }
@@ -361,7 +369,6 @@ const HayChatbot = () => {
       ]);
     } finally {
       setIsLoading(false);
-      // Scroll to bottom of chat
       setTimeout(() => {
         if (chatRef.current) {
           chatRef.current.scrollTop = chatRef.current.scrollHeight;
