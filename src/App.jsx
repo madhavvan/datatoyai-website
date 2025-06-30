@@ -306,7 +306,7 @@ const HayChatbot = () => {
   const chatRef = useRef(null);
 
   // Use environment variable for API key
-  const API_KEY = process.env.XAI_API_KEY || 'xai-new-key-placeholder'; // Placeholder for local testing, overridden by Vercel env
+  const API_KEY = process.env.NEXT_PUBLIC_XAI_API_KEY || 'xai-new-key-placeholder'; // Placeholder for local testing, overridden by Vercel env
 
   const handleSend = async () => {
     if (!input.trim()) return;
