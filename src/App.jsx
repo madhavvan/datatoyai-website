@@ -253,7 +253,7 @@ const DataSphere = memo(() => {
       canvas.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [mousePos.x, mousePos.y]); // Fixed dependency array
 
   return <motion.canvas ref={canvasRef} className="data-sphere" style={{ y: yParallax }} />;
 });
@@ -336,13 +336,13 @@ const HayChatbot = () => {
           'Authorization': `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'grok-3-latest', // Matches Postman test
+          model: 'grok-3-latest',
           messages: [
             { role: 'system', content: 'You are Hay, an advanced AI assistant for DataToyAI, designed to provide professional, detailed, and context-aware answers on data cleaning, analytics, predictive modeling, and related topics. Respond with deep reasoning, concise insights, practical examples, and a helpful tone. For greetings or unclear inputs, offer a friendly welcome or prompt for more details.' },
             ...apiMessages,
           ],
           max_tokens: 300,
-          temperature: 0.7, // Matches Postman
+          temperature: 0.7,
         }),
       });
 
