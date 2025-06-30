@@ -18,7 +18,7 @@
     "react-scripts": "^5.0.1",
     "three": "^0.176.0",
     "web-vitals": "^4.2.3",
-    "glob": "^10.3.10"
+    "glob": "^10.3.10" // Explicitly updated
   },
   "scripts": {
     "start": "react-scripts start",
@@ -63,9 +63,12 @@
     "braces": "^3.0.3",
     "nth-check": "^2.1.1",
     "rollup": "^4.21.3",
-    "webpack": "^5.94.0"
+    "webpack": "^5.94.0",
+    "inflight": "^1.0.6", // Override to latest if needed, but better to fix upstream
+    "rimraf": "^5.0.5" // Updated from 3.0.2
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }
