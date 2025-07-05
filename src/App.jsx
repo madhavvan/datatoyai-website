@@ -28,28 +28,28 @@ const chatPanelVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
 };
 const features = [
-  { title: "AI-Driven Data Cleaning", desc: "Clean your datasets effortlessly with AI-powered suggestions, anomaly detection, and smart workflows. Handle missing values, duplicates, and more with precision." },
-  { title: "Predictive Analytics", desc: "Unlock the future with time series forecasting, clustering, and one-click ML model training. Generate synthetic data and visualize feature importance with ease." },
-  { title: "AI Chat Assistant", desc: "Get instant answers to data-related questions with our AI-powered chat assistant, designed to guide you through analysis and provide actionable insights." },
+  { title: "AI-Driven Data Cleaning", desc: "Clean your datasets effortlessly with AI-powered suggestions, anomaly detection, and smart workflows." },
+  { title: "Predictive Analytics", desc: "Unlock future trends with time series forecasting and one-click ML model training." },
+  { title: "AI Chat Assistant", desc: "Get instant, actionable insights with our AI-powered assistant." },
 ];
 const howItWorksSteps = [
-  { step: 1, title: "Upload Your Dataset", desc: "Start by uploading your CSV or Excel file (up to 200MB). Preview the first 10 rows and view metadata like rows, columns, and data health." },
-  { step: 2, title: "Clean with AI Precision", desc: "Use AI-driven suggestions to handle missing values, outliers, and duplicates, or apply manual cleaning tools like encoding and geolocation enrichment." },
-  { step: 3, title: "Discover Actionable Insights", desc: "Generate natural language insights powered by AI, such as correlations and trends, to understand your data better." },
-  { step: 4, title: "Create Dynamic Visualizations", desc: "Build interactive charts like scatter plots, heatmaps, and time series forecasts to explore your data visually." },
-  { step: 5, title: "Leverage Predictive Analytics", desc: "Forecast trends, generate synthetic data, or train machine learning models with one-click deployment for powerful predictions." },
+  { step: 1, title: "Upload Your Dataset", desc: "Upload CSV or Excel files and preview data." },
+  { step: 2, title: "Clean with AI", desc: "Apply AI-driven cleaning for missing values and outliers." },
+  { step: 3, title: "Discover Insights", desc: "Generate AI-powered correlations and trends." },
+  { step: 4, title: "Visualize Data", desc: "Create interactive charts to explore your data." },
+  { step: 5, title: "Predict Trends", desc: "Use predictive analytics for future insights." },
 ];
 const testimonials = [
-  { title: "Healthcare Insights", desc: "Analyzed thyroid patient data, cleaned missing values with AI suggestions, and visualized correlations to identify key health trends." },
-  { title: "Business Forecasting", desc: "Uploaded sales data, used time series forecasting to predict future trends, and created interactive charts for stakeholder presentations." },
-  { title: "Data Science Research", desc: "Generated synthetic datasets for classification tasks and trained ML models with one-click deployment to accelerate research." },
-  { title: "Marketing Optimization", desc: "Cleaned customer data and used clustering to segment audiences, improving campaign targeting and ROI." },
+  { title: "Healthcare Insights", desc: "Cleaned thyroid data and identified trends." },
+  { title: "Business Forecasting", desc: "Predicted sales trends with interactive charts." },
+  { title: "Data Science Research", desc: "Accelerated research with synthetic data." },
+  { title: "Marketing Optimization", desc: "Improved ROI with audience segmentation." },
 ];
 const benefits = [
-  { icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>, title: "AI-Driven Efficiency", desc: "Streamline data cleaning with AI suggestions, automating tasks like handling missing values and detecting outliers." },
-  { icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="16" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>, title: "Intuitive Interface", desc: "Enjoy a user-friendly platform with undo/redo, templates, and pagination for seamless data management." },
-  { icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 012-2h2a2 2 0 012 2v12a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>, title: "Versatile Visualizations", desc: "Create dynamic charts, from heatmaps to 3D scatter plots, to explore your data with ease." },
-  { icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg>, title: "Advanced Analytics", desc: "Unlock predictive power with time series forecasting, clustering, and one-click ML model training." },
+  { icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>, title: "AI-Driven Efficiency", desc: "Automate data cleaning with AI suggestions." },
+  { icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="16" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>, title: "Intuitive Interface", desc: "Enjoy a seamless, user-friendly platform." },
+  { icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 012-2h2a2 2 0 012 2v12a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>, title: "Versatile Visualizations", desc: "Explore data with dynamic charts." },
+  { icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg>, title: "Advanced Analytics", desc: "Leverage predictive tools for insights." },
 ];
 
 // DataSphere Component
@@ -235,7 +235,7 @@ const DataSphere = memo(() => {
       window.removeEventListener('resize', debouncedSetCanvasSize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []); // No cursor dependencies, only auto-rotation
+  }, []);
 
   return <motion.canvas ref={canvasRef} className="data-sphere" style={{ y: yParallax }} />;
 });
@@ -287,10 +287,10 @@ const HayChatbot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const chatRef = useRef(null);
 
-  // Use environment variable for API key with validation
-  const API_KEY = process.env.XAI_API_KEY;
+  // Use environment variable with REACT_APP_ prefix
+  const API_KEY = process.env.REACT_APP_XAI_API_KEY;
   if (!API_KEY) {
-    console.error('XAI_API_KEY is not set in environment variables');
+    console.error('REACT_APP_XAI_API_KEY is not set in environment variables');
     return (
       <div className="fixed bottom-8 right-8 p-4 bg-red-500 text-white rounded-full z-50">
         API Key Missing - Contact Support
@@ -450,6 +450,7 @@ function App() {
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.5]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [theme, setTheme] = useState('dark'); // New theme state
 
   // Auto-scrolling logic for testimonials
   useEffect(() => {
@@ -460,11 +461,16 @@ function App() {
     return () => clearInterval(interval);
   }, [isPaused]);
 
+  // Apply theme class to body
+  useEffect(() => {
+    document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
+  }, [theme]);
+
   return (
-    <div className="min-h-screen bg-cosmic-black text-silver-white main-container">
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-cosmic-black' : 'bg-gray-100'} text-${theme === 'dark' ? 'silver-white' : 'gray-800'} main-container`}>
       <header>
         <motion.nav
-          className="fixed top-0 left-0 right-0 z-50 bg-cosmic-black bg-opacity-80 backdrop-blur-md border-b border-neon-cyan"
+          className="fixed top-0 left-0 right-0 z-50 bg-cosmic-black bg-opacity-90 backdrop-blur-md border-b border-neon-cyan sticky-nav"
           initial="hidden"
           animate="visible"
           variants={navVariants}
@@ -493,35 +499,43 @@ function App() {
               </svg>
             </a>
             <div className="hidden md:flex space-x-6">
-              <a href="#home" className="text-silver-white hover:text-neon-cyan font-inter">Home</a>
-              <a href="#features" className="text-silver-white hover:text-neon-cyan font-inter">Features</a>
-              <a href="#how-it-works" className="text-silver-white hover:text-neon-cyan font-inter">How It Works</a>
-              <a href="#testimonials" className="text-silver-white hover:text-neon-cyan font-inter">Testimonials</a>
-              <a href="#benefits" className="text-silver-white hover:text-neon-cyan font-inter">Benefits</a>
-              <a href="#cta" className="text-silver-white hover:text-neon-cyan font-inter">Get Started</a>
+              <a href="#home" className={`text-${theme === 'dark' ? 'silver-white' : 'gray-800'} hover:text-neon-cyan font-inter`}>Home</a>
+              <a href="#features" className={`text-${theme === 'dark' ? 'silver-white' : 'gray-800'} hover:text-neon-cyan font-inter`}>Features</a>
+              <a href="#how-it-works" className={`text-${theme === 'dark' ? 'silver-white' : 'gray-800'} hover:text-neon-cyan font-inter`}>How It Works</a>
+              <a href="#testimonials" className={`text-${theme === 'dark' ? 'silver-white' : 'gray-800'} hover:text-neon-cyan font-inter`}>Testimonials</a>
+              <a href="#benefits" className={`text-${theme === 'dark' ? 'silver-white' : 'gray-800'} hover:text-neon-cyan font-inter`}>Benefits</a>
+              <a href="#cta" className={`text-${theme === 'dark' ? 'silver-white' : 'gray-800'} hover:text-neon-cyan font-inter`}>Get Started</a>
             </div>
-            <button
-              className="md:hidden text-gold focus:outline-none"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
-              </svg>
-            </button>
+            <div className="flex items-center md:hidden">
+              <button
+                className={`text-${theme === 'dark' ? 'gold' : 'gray-600'} focus:outline-none`}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
+                </svg>
+              </button>
+              <button
+                className={`ml-4 p-2 rounded-full ${theme === 'dark' ? 'bg-gray-800 text-gold' : 'bg-gray-200 text-gray-800'}`}
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              >
+                {theme === 'dark' ? '☀️' : '🌙'}
+              </button>
+            </div>
           </div>
           <motion.div
-            className="md:hidden bg-cosmic-black bg-opacity-90"
+            className={`md:hidden bg-${theme === 'dark' ? 'cosmic-black' : 'gray-100'} bg-opacity-90`}
             initial="hidden"
             animate={isMobileMenuOpen ? 'visible' : 'hidden'}
             variants={mobileMenuVariants}
           >
             <div className="flex flex-col items-center space-y-4 py-4">
-              <a href="#home" className="text-silver-white hover:text-neon-cyan font-inter" onClick={() => setIsMobileMenuOpen(false)}>Home</a>
-              <a href="#features" className="text-silver-white hover:text-neon-cyan font-inter" onClick={() => setIsMobileMenuOpen(false)}>Features</a>
-              <a href="#how-it-works" className="text-silver-white hover:text-neon-cyan font-inter" onClick={() => setIsMobileMenuOpen(false)}>How It Works</a>
-              <a href="#testimonials" className="text-silver-white hover:text-neon-cyan font-inter" onClick={() => setIsMobileMenuOpen(false)}>Testimonials</a>
-              <a href="#benefits" className="text-silver-white hover:text-neon-cyan font-inter" onClick={() => setIsMobileMenuOpen(false)}>Benefits</a>
-              <a href="#cta" className="text-silver-white hover:text-neon-cyan font-inter" onClick={() => setIsMobileMenuOpen(false)}>Get Started</a>
+              <a href="#home" className={`text-${theme === 'dark' ? 'silver-white' : 'gray-800'} hover:text-neon-cyan font-inter`} onClick={() => setIsMobileMenuOpen(false)}>Home</a>
+              <a href="#features" className={`text-${theme === 'dark' ? 'silver-white' : 'gray-800'} hover:text-neon-cyan font-inter`} onClick={() => setIsMobileMenuOpen(false)}>Features</a>
+              <a href="#how-it-works" className={`text-${theme === 'dark' ? 'silver-white' : 'gray-800'} hover:text-neon-cyan font-inter`} onClick={() => setIsMobileMenuOpen(false)}>How It Works</a>
+              <a href="#testimonials" className={`text-${theme === 'dark' ? 'silver-white' : 'gray-800'} hover:text-neon-cyan font-inter`} onClick={() => setIsMobileMenuOpen(false)}>Testimonials</a>
+              <a href="#benefits" className={`text-${theme === 'dark' ? 'silver-white' : 'gray-800'} hover:text-neon-cyan font-inter`} onClick={() => setIsMobileMenuOpen(false)}>Benefits</a>
+              <a href="#cta" className={`text-${theme === 'dark' ? 'silver-white' : 'gray-800'} hover:text-neon-cyan font-inter`} onClick={() => setIsMobileMenuOpen(false)}>Get Started</a>
             </div>
           </motion.div>
         </motion.nav>
@@ -530,7 +544,7 @@ function App() {
       <main>
         <motion.section
           id="home"
-          className="h-screen relative flex flex-col items-center justify-center text-center hero-section-background"
+          className={`h-screen relative flex flex-col items-center justify-center text-center ${theme === 'dark' ? 'hero-section-background' : 'bg-gradient-to-b from-gray-100 to-white'}`}
           initial="hidden"
           animate="visible"
           style={{ opacity: heroOpacity }}
@@ -541,7 +555,7 @@ function App() {
             variants={heroVariants}
           >
             <motion.h1
-              className="text-6xl md:text-8xl font-playfair text-gold mb-4 hero-title"
+              className={`text-6xl md:text-8xl font-playfair ${theme === 'dark' ? 'text-gold' : 'text-gray-800'} mb-4 hero-title`}
               animate={{
                 textShadow: [
                   '0 0 10px rgba(255, 215, 0, 0.7)',
@@ -554,7 +568,7 @@ function App() {
               DataToyAI
             </motion.h1>
             <motion.p
-              className="text-xl md:text-2xl font-inter text-silver-white max-w-3xl mx-auto mb-8"
+              className={`text-xl md:text-2xl font-inter ${theme === 'dark' ? 'text-silver-white' : 'text-gray-600'} max-w-3xl mx-auto mb-8`}
               variants={heroVariants}
             >
               <TypingEffect
@@ -574,8 +588,8 @@ function App() {
           </motion.div>
         </motion.section>
 
-        <section id="features" className="py-16 px-4 bg-cosmic-black">
-          <h2 className="text-4xl font-playfair text-gold text-center mb-12">Why Choose DataToyAI?</h2>
+        <section id="features" className={`py-16 px-4 ${theme === 'dark' ? 'bg-cosmic-black' : 'bg-gray-200'}`}>
+          <h2 className={`text-4xl font-playfair ${theme === 'dark' ? 'text-gold' : 'text-gray-800'} text-center mb-12`}>Why Choose DataToyAI?</h2>
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map(({ title, desc }, index) => (
               <Tilt key={title} tiltMaxAngleX={15} tiltMaxAngleY={15} glareEnable={true} glareMaxOpacity={0.3} glareColor="#00DDEB">
@@ -587,16 +601,16 @@ function App() {
                   variants={cardVariants}
                   viewport={{ once: true }}
                 >
-                  <h3 className="text-2xl font-playfair text-gold mb-4">{title}</h3>
-                  <p className="text-silver-white font-inter">{desc}</p>
+                  <h3 className={`text-2xl font-playfair ${theme === 'dark' ? 'text-gold' : 'text-gray-800'} mb-4`}>{title}</h3>
+                  <p className={`text-${theme === 'dark' ? 'silver-white' : 'gray-600'} font-inter`}>{desc}</p>
                 </motion.div>
               </Tilt>
             ))}
           </div>
         </section>
 
-        <section id="how-it-works" className="py-16 px-4 bg-gradient-to-b from-cosmic-black to-dark-gray">
-          <h2 className="text-4xl font-playfair text-gold text-center mb-12">How DataToyAI Works</h2>
+        <section id="how-it-works" className={`py-16 px-4 ${theme === 'dark' ? 'bg-gradient-to-b from-cosmic-black to-dark-gray' : 'bg-gradient-to-b from-gray-200 to-white'}`}>
+          <h2 className={`text-4xl font-playfair ${theme === 'dark' ? 'text-gold' : 'text-gray-800'} text-center mb-12`}>How DataToyAI Works</h2>
           <div className="max-w-6xl mx-auto space-y-8">
             {howItWorksSteps.map(({ step, title, desc }, index) => (
               <motion.div
@@ -609,8 +623,8 @@ function App() {
                 variants={cardVariants}
                 viewport={{ once: true }}
               >
-                <h3 className="text-xl font-playfair text-gold mb-2">{title}</h3>
-                <p className="text-silver-white font-inter">{desc}</p>
+                <h3 className={`text-xl font-playfair ${theme === 'dark' ? 'text-gold' : 'text-gray-800'} mb-2`}>{title}</h3>
+                <p className={`text-${theme === 'dark' ? 'silver-white' : 'gray-600'} font-inter`}>{desc}</p>
               </motion.div>
             ))}
           </div>
@@ -618,11 +632,11 @@ function App() {
 
         <section
           id="testimonials"
-          className="py-16 px-4 bg-gradient-to-b from-dark-gray to-cosmic-black overflow-hidden"
+          className={`py-16 px-4 ${theme === 'dark' ? 'bg-gradient-to-b from-dark-gray to-cosmic-black' : 'bg-gradient-to-b from-white to-gray-200'} overflow-hidden`}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <h2 className="text-4xl font-playfair text-gold text-center mb-12">What Users Are Doing with DataToyAI</h2>
+          <h2 className={`text-4xl font-playfair ${theme === 'dark' ? 'text-gold' : 'text-gray-800'} text-center mb-12`}>What Users Are Doing with DataToyAI</h2>
           <div className="max-w-6xl mx-auto relative testimonial-carousel-wrapper">
             <div className="testimonial-carousel-container">
               {testimonials.map((testimonial, index) => {
@@ -642,8 +656,8 @@ function App() {
                     transition={{ type: "spring", stiffness: 260, damping: 30 }}
                     whileHover={{ y: -10, transition: { duration: 0.2 } }}
                   >
-                    <h3 className="text-xl font-playfair text-gold mb-4">{testimonial.title}</h3>
-                    <p className="text-silver-white font-inter">{testimonial.desc}</p>
+                    <h3 className={`text-xl font-playfair ${theme === 'dark' ? 'text-gold' : 'text-gray-800'} mb-4`}>{testimonial.title}</h3>
+                    <p className={`text-${theme === 'dark' ? 'silver-white' : 'gray-600'} font-inter`}>{testimonial.desc}</p>
                   </motion.div>
                 );
               })}
@@ -685,10 +699,10 @@ function App() {
           </div>
         </section>
 
-        <section id="cta" className="py-16 px-4 bg-cosmic-black">
+        <section id="cta" className={`py-16 px-4 ${theme === 'dark' ? 'bg-cosmic-black' : 'bg-gray-200'}`}>
           <div className="max-w-4xl mx-auto text-center">
             <motion.h2
-              className="text-4xl md:text-5xl font-playfair text-gold mb-6"
+              className={`text-4xl md:text-5xl font-playfair ${theme === 'dark' ? 'text-gold' : 'text-gray-800'} mb-6`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
               viewport={{ once: true }}
@@ -696,7 +710,7 @@ function App() {
               Get Started with DataToyAI Today
             </motion.h2>
             <motion.p
-              className="text-lg md:text-xl font-inter text-silver-white mb-8 max-w-2xl mx-auto"
+              className={`text-lg md:text-xl font-inter ${theme === 'dark' ? 'text-silver-white' : 'text-gray-600'} mb-8 max-w-2xl mx-auto`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2 } }}
               viewport={{ once: true }}
@@ -715,8 +729,8 @@ function App() {
           </div>
         </section>
 
-        <section id="benefits" className="py-16 px-4 bg-cosmic-black">
-          <h2 className="text-4xl font-playfair text-gold text-center mb-12">Why Choose DataToyAI</h2>
+        <section id="benefits" className={`py-16 px-4 ${theme === 'dark' ? 'bg-cosmic-black' : 'bg-gray-200'}`}>
+          <h2 className={`text-4xl font-playfair ${theme === 'dark' ? 'text-gold' : 'text-gray-800'} text-center mb-12`}>Why Choose DataToyAI</h2>
           <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map(({ icon, title, desc }, index) => (
               <motion.div
@@ -729,8 +743,8 @@ function App() {
                 viewport={{ once: true }}
               >
                 <div className="mb-4">{icon}</div>
-                <h3 className="text-xl font-playfair text-gold mb-4">{title}</h3>
-                <p className="text-silver-white font-inter">{desc}</p>
+                <h3 className={`text-xl font-playfair ${theme === 'dark' ? 'text-gold' : 'text-gray-800'} mb-4`}>{title}</h3>
+                <p className={`text-${theme === 'dark' ? 'silver-white' : 'gray-600'} font-inter`}>{desc}</p>
               </motion.div>
             ))}
           </div>
@@ -739,20 +753,20 @@ function App() {
         <HayChatbot />
       </main>
 
-      <footer className="py-8 bg-cosmic-black border-t border-gold">
+      <footer className={`py-8 ${theme === 'dark' ? 'bg-cosmic-black border-t border-gold' : 'bg-gray-100 border-t border-gray-300'}`}>
         <div className="max-w-6xl mx-auto text-center">
-          <p className="text-silver-white font-inter mb-4">
+          <p className={`text-${theme === 'dark' ? 'silver-white' : 'gray-600'} font-inter mb-4`}>
             © 2025 DataToyAI. All rights reserved.
           </p>
           <div className="flex justify-center space-x-6 mb-4">
-            <a href="https://discord.com" className="text-gold hover:text-neon-cyan font-inter">Join Our Community</a>
-            <a href="https://docs.datatoyai.com" className="text-gold hover:text-neon-cyan font-inter">Documentation</a>
-            <a href="mailto:info@datatoyai.com" className="text-gold hover:text-neon-cyan font-inter">Contact Us</a>
+            <a href="https://discord.com" className={`text-${theme === 'dark' ? 'gold' : 'gray-800'} hover:text-neon-cyan font-inter`}>Join Our Community</a>
+            <a href="https://docs.datatoyai.com" className={`text-${theme === 'dark' ? 'gold' : 'gray-800'} hover:text-neon-cyan font-inter`}>Documentation</a>
+            <a href="mailto:info@datatoyai.com" className={`text-${theme === 'dark' ? 'gold' : 'gray-800'} hover:text-neon-cyan font-inter`}>Contact Us</a>
           </div>
-          <p className="text-silver-white font-inter">
+          <p className={`text-${theme === 'dark' ? 'silver-white' : 'gray-600'} font-inter`}>
             Follow us on{' '}
-            <a href="https://twitter.com/datatoyai" className="text-gold hover:text-neon-cyan">Twitter</a> |{' '}
-            <a href="https://linkedin.com/company/datatoyai" className="text-gold hover:text-neon-cyan">LinkedIn</a>
+            <a href="https://twitter.com/datatoyai" className={`text-${theme === 'dark' ? 'gold' : 'gray-800'} hover:text-neon-cyan`}>Twitter</a> |{' '}
+            <a href="https://linkedin.com/company/datatoyai" className={`text-${theme === 'dark' ? 'gold' : 'gray-800'} hover:text-neon-cyan`}>LinkedIn</a>
           </p>
         </div>
       </footer>
