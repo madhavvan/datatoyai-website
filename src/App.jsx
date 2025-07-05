@@ -8,12 +8,17 @@ const heroVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 1, ease: 'easeOut' } },
 };
 const buttonVariants = {
-  hover: { scale: 1.05, transition: { duration: 0.3 }, boxShadow: '0 0 20px rgba(0, 221, 235, 0.8)' },
+  hover: { scale: 1.1, transition: { duration: 0.3 }, boxShadow: '0 0 25px rgba(0, 221, 235, 0.9)' },
   tap: { scale: 0.95 },
 };
 const cardVariants = {
   hidden: { opacity: 0, y: 50, scale: 0.95 },
-  visible: (i) => ({ opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, delay: i * 0.2, ease: 'easeOut' } }),
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.8, delay: i * 0.2, ease: 'easeOut' },
+  }),
 };
 const navVariants = {
   hidden: { y: -100 },
@@ -33,23 +38,39 @@ const features = [
   { title: "AI Chat Assistant", desc: "Get instant, actionable insights with our AI-powered assistant." },
 ];
 const howItWorksSteps = [
-  { step: 1, title: "Upload Your Dataset", desc: "Upload CSV or Excel files and preview data." },
-  { step: 2, title: "Clean with AI", desc: "Apply AI-driven cleaning for missing values and outliers." },
-  { step: 3, title: "Discover Insights", desc: "Generate AI-powered correlations and trends." },
-  { step: 4, title: "Visualize Data", desc: "Create interactive charts to explore your data." },
-  { step: 5, title: "Predict Trends", desc: "Use predictive analytics for future insights." },
+  { step: 1, title: "Upload Your Dataset", desc: "Upload CSV or Excel files (up to 200MB) and preview the first 10 rows with metadata (rows, columns, data health)." },
+  { step: 2, title: "Clean with AI Precision", desc: "Apply AI-driven cleaning for missing values, outliers, and duplicates, or use manual tools like encoding and geolocation enrichment." },
+  { step: 3, title: "Discover Actionable Insights", desc: "Generate AI-powered correlations and trends in natural language to deepen your data understanding." },
+  { step: 4, title: "Create Dynamic Visualizations", desc: "Build interactive charts like scatter plots, heatmaps, and time series to explore your data visually." },
+  { step: 5, title: "Leverage Predictive Analytics", desc: "Forecast trends, generate synthetic data, and train ML models with one-click deployment." },
 ];
 const testimonials = [
-  { title: "Healthcare Insights", desc: "Cleaned thyroid data and identified trends." },
-  { title: "Business Forecasting", desc: "Predicted sales trends with interactive charts." },
-  { title: "Data Science Research", desc: "Accelerated research with synthetic data." },
-  { title: "Marketing Optimization", desc: "Improved ROI with audience segmentation." },
+  { title: "Healthcare Insights", desc: "Cleaned thyroid data and identified key health trends with AI insights." },
+  { title: "Business Forecasting", desc: "Predicted sales trends using interactive charts for stakeholder presentations." },
+  { title: "Data Science Research", desc: "Accelerated research with synthetic datasets and one-click ML training." },
+  { title: "Marketing Optimization", desc: "Improved ROI by segmenting audiences with AI-driven clustering." },
 ];
 const benefits = [
-  { icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>, title: "AI-Driven Efficiency", desc: "Automate data cleaning with AI suggestions." },
-  { icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="16" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>, title: "Intuitive Interface", desc: "Enjoy a seamless, user-friendly platform." },
-  { icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 012-2h2a2 2 0 012 2v12a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>, title: "Versatile Visualizations", desc: "Explore data with dynamic charts." },
-  { icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg>, title: "Advanced Analytics", desc: "Leverage predictive tools for insights." },
+  {
+    icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+    title: "AI-Driven Efficiency",
+    desc: "Automate data cleaning with intelligent AI suggestions.",
+  },
+  {
+    icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="16" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>,
+    title: "Intuitive Interface",
+    desc: "Experience a user-friendly platform with seamless navigation.",
+  },
+  {
+    icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 012-2h2a2 2 0 012 2v12a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>,
+    title: "Versatile Visualizations",
+    desc: "Explore data with stunning, interactive charts.",
+  },
+  {
+    icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg>,
+    title: "Advanced Analytics",
+    desc: "Unlock predictive power with cutting-edge tools.",
+  },
 ];
 
 // DataSphere Component
@@ -281,13 +302,12 @@ const TypingEffect = memo(({ words, speed = 100, loop = true }) => {
 const HayChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: 'Hay', text: 'Hello! I’m Hay, your advanced AI assistant powered by Grok for DataToyAI. Ask me anything about data cleaning, analytics, or predictive modeling!' },
+    { sender: 'Hay', text: 'Greetings! I’m Hay, your expert AI assistant for DataToyAI. Ready to transform your data? Ask me anything about cleaning, visualizing, or predicting trends!' },
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatRef = useRef(null);
 
-  // Use environment variable with REACT_APP_ prefix
   const API_KEY = process.env.REACT_APP_XAI_API_KEY;
   if (!API_KEY) {
     console.error('REACT_APP_XAI_API_KEY is not set in environment variables');
@@ -295,7 +315,7 @@ const HayChatbot = () => {
       <div className="fixed bottom-8 right-8 p-4 bg-red-500 text-white rounded-full z-50">
         API Key Missing - Contact Support
       </div>
-    ); // Render placeholder instead of null
+    );
   }
 
   const handleSend = async () => {
@@ -320,7 +340,7 @@ const HayChatbot = () => {
         body: JSON.stringify({
           model: 'grok-3-latest',
           messages: [
-            { role: 'system', content: 'You are Hay, an advanced AI assistant for DataToyAI, designed to provide professional, detailed, and context-aware answers on data cleaning, analytics, predictive modeling, and related topics. Respond with deep reasoning, concise insights, practical examples, and a helpful tone. For greetings or unclear inputs, offer a friendly welcome or prompt for more details.' },
+            { role: 'system', content: 'You are Hay, a highly intelligent AI assistant for DataToyAI, designed to provide expert, detailed, and context-aware responses on data cleaning, visualization, predictive analytics, and the DataToyAI interface. Offer concise insights, practical examples, and a confident, engaging tone. Know the interface: Upload Your Dataset (CSV/Excel up to 200MB, preview 10 rows, metadata), Clean with AI Precision (AI suggestions, manual encoding), Discover Actionable Insights (AI correlations), Create Dynamic Visualizations (charts), Leverage Predictive Analytics (forecasts, ML models). For greetings or unclear inputs, warmly invite exploration.' },
             ...apiMessages,
           ],
           max_tokens: 300,
@@ -347,7 +367,7 @@ const HayChatbot = () => {
       console.error('Error fetching from xAI API:', error);
       setMessages((prev) => [
         ...prev,
-        { sender: 'Hay', text: `Sorry, I encountered an issue (${error.message}). Please try again or check the "How It Works" section.` },
+        { sender: 'Hay', text: `Apologies, an error occurred (${error.message}). Please try again or explore the "How It Works" section for assistance.` },
       ]);
     } finally {
       setIsLoading(false);
@@ -369,7 +389,7 @@ const HayChatbot = () => {
   return (
     <>
       <motion.button
-        className="fixed bottom-8 right-8 p-4 bg-neon-cyan text-cosmic-black rounded-full shadow-lg z-50 chatbot-toggle"
+        className="fixed bottom-8 right-8 p-4 bg-gradient-to-r from-gold to-neon-cyan text-cosmic-black rounded-full shadow-lg z-50 chatbot-toggle"
         onClick={() => setIsOpen(!isOpen)}
         variants={buttonVariants}
         whileHover="hover"
@@ -380,13 +400,13 @@ const HayChatbot = () => {
         </svg>
       </motion.button>
       <motion.div
-        className="fixed bottom-20 right-8 w-80 h-96 bg-cosmic-black bg-opacity-90 backdrop-blur-md border border-neon-cyan rounded-lg shadow-xl z-50 flex flex-col chatbot-panel"
+        className="fixed bottom-20 right-8 w-80 h-96 bg-cosmic-black bg-opacity-90 backdrop-blur-md border border-neon-cyan rounded-xl shadow-xl z-50 flex flex-col chatbot-panel"
         initial="hidden"
         animate={isOpen ? 'visible' : 'hidden'}
         variants={chatPanelVariants}
       >
         <div className="flex justify-between items-center p-4 border-b border-gold">
-          <h3 className="text-lg font-playfair text-gold">Hay - AI Assistant</h3>
+          <h3 className="text-lg font-playfair text-gold">Hay - Your DataToyAI Expert</h3>
           <button onClick={() => setIsOpen(false)} className="text-gold hover:text-neon-cyan">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -411,7 +431,7 @@ const HayChatbot = () => {
           {isLoading && (
             <div className="flex justify-start mb-4">
               <div className="max-w-[70%] p-3 rounded-lg bg-dark-gray text-silver-white">
-                <p className="text-sm font-inter">Thinking...</p>
+                <p className="text-sm font-inter">Processing your request...</p>
               </div>
             </div>
           )}
@@ -423,11 +443,11 @@ const HayChatbot = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask Hay anything..."
+            placeholder="Ask me about DataToyAI..."
             disabled={isLoading}
           />
           <motion.button
-            className="ml-2 p-2 bg-gold text-cosmic-black rounded-lg"
+            className="ml-2 p-2 bg-gradient-to-r from-gold to-neon-cyan text-cosmic-black rounded-lg"
             onClick={handleSend}
             variants={buttonVariants}
             whileHover="hover"
@@ -450,9 +470,8 @@ function App() {
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.5]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [theme, setTheme] = useState('dark'); // New theme state
+  const [theme, setTheme] = useState('dark');
 
-  // Auto-scrolling logic for testimonials
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
@@ -461,7 +480,6 @@ function App() {
     return () => clearInterval(interval);
   }, [isPaused]);
 
-  // Apply theme class to body
   useEffect(() => {
     document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
   }, [theme]);
@@ -662,8 +680,6 @@ function App() {
                 );
               })}
             </div>
-            
-            {/* Navigation Arrows */}
             <motion.button
               onClick={() => setCurrentTestimonial((currentTestimonial - 1 + testimonials.length) % testimonials.length)}
               className="carousel-arrow left-arrow"
@@ -684,8 +700,6 @@ function App() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
               </svg>
             </motion.button>
-
-            {/* Navigation Dots */}
             <div className="carousel-dots-container">
               {testimonials.map((_, index) => (
                 <motion.button
