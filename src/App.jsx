@@ -456,7 +456,12 @@ When the user asks for help, insights, or technical details, you MUST freeze int
                     <ReactMarkdown 
                       remarkPlugins={[remarkGfm]}
                       components={{
-                        h3: ({node, ...props}) => <h3 className="text-gold font-bold text-md mt-2 mb-1 border-b border-gold/30 pb-1" {...props} />,
+                        // FIX APPLIED HERE: Explicitly render children inside h3
+                        h3: ({node, children, ...props}) => (
+                          <h3 className="text-gold font-bold text-md mt-2 mb-1 border-b border-gold/30 pb-1" {...props}>
+                            {children}
+                          </h3>
+                        ),
                         ul: ({node, ...props}) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
                         li: ({node, ...props}) => <li className="text-silver-white" {...props} />,
                         p: ({node, ...props}) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
