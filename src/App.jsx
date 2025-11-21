@@ -300,7 +300,7 @@ const TypingEffect = memo(({ words, speed = 100, loop = true }) => {
   return <span className="typing-text">{text}</span>;
 });
 
-// HayChatbot Component - UPDATED FOR GITHUB & MARKDOWN
+// HayChatbot Component
 const HayChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -367,7 +367,7 @@ When the user asks for help, insights, or technical details, you MUST freeze int
           'Authorization': `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'grok-4-1-fast-reasoning', // UPDATED MODEL
+          model: 'grok-4-1-fast-reasoning',
           messages: [
             { role: 'system', content: systemPrompt },
             ...apiMessages,
