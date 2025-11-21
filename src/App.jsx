@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, memo } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -456,7 +456,6 @@ When the user asks for help, insights, or technical details, you MUST freeze int
                     <ReactMarkdown 
                       remarkPlugins={[remarkGfm]}
                       components={{
-                        // FIX APPLIED HERE: Explicitly render children inside h3
                         h3: ({node, children, ...props}) => (
                           <h3 className="text-gold font-bold text-md mt-2 mb-1 border-b border-gold/30 pb-1" {...props}>
                             {children}
@@ -512,8 +511,148 @@ When the user asks for help, insights, or technical details, you MUST freeze int
   );
 };
 
+// FileUploader Component
+const FileUploader = ({ isOpen, onClose }) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState('idle'); // idle, uploading, success, error
+  const [fileName, setFileName] = useState('');
+  const fileInputRef = useRef(null);
+
+  const handleDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === 'dragenter' || e.type === 'dragover') {
+      setIsDragging(true);
+    } else if (e.type === 'dragleave') {
+      setIsDragging(false);
+    }
+  };
+
+  const processFile = (file) => {
+    const validTypes = ['text/csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+    
+    if (!validTypes.includes(file.type) && !file.name.endsWith('.csv')) {
+      setUploadStatus('error');
+      setFileName('Invalid file type. Please upload CSV or Excel.');
+      return;
+    }
+
+    setFileName(file.name);
+    setUploadStatus('uploading');
+
+    // SIMULATE BACKEND UPLOAD
+    setTimeout(() => {
+      setUploadStatus('success');
+    }, 2000);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      processFile(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      processFile(e.target.files[0]);
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+        >
+          <motion.div
+            className="relative w-full max-w-lg p-8 bg-cosmic-black border border-neon-cyan rounded-2xl shadow-[0_0_50px_rgba(0,221,235,0.2)]"
+            initial={{ scale: 0.9, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: 20 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={onClose}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+
+            <h2 className="text-2xl font-playfair text-gold mb-2 text-center">Upload Dataset</h2>
+            <p className="text-silver-white text-center mb-6 font-inter text-sm">Supported formats: CSV, Excel (Max 200MB)</p>
+
+            <div
+              className={`relative border-2 border-dashed rounded-xl p-10 transition-all duration-300 text-center cursor-pointer
+                ${isDragging ? 'border-neon-cyan bg-neon-cyan/10' : 'border-gray-600 hover:border-gold'}`}
+              onDragEnter={handleDrag}
+              onDragLeave={handleDrag}
+              onDragOver={handleDrag}
+              onDrop={handleDrop}
+              onClick={() => fileInputRef.current.click()}
+            >
+              <input
+                ref={fileInputRef}
+                type="file"
+                className="hidden"
+                onChange={handleChange}
+                accept=".csv, .xls, .xlsx"
+              />
+              
+              {uploadStatus === 'idle' || uploadStatus === 'error' ? (
+                <>
+                  <svg className="w-12 h-12 mx-auto text-gold mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+                  <p className="text-silver-white font-inter">Drag & Drop or <span className="text-neon-cyan font-bold">Browse</span></p>
+                  {uploadStatus === 'error' && <p className="text-red-500 mt-2 text-sm">{fileName}</p>}
+                </>
+              ) : uploadStatus === 'uploading' ? (
+                <div className="py-4">
+                  <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden mb-2">
+                    <motion.div 
+                      className="h-full bg-neon-cyan"
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 2 }}
+                    />
+                  </div>
+                  <p className="text-neon-cyan animate-pulse font-inter text-sm">Analyzing Data Structure...</p>
+                </div>
+              ) : (
+                <div className="py-2">
+                   <svg className="w-16 h-16 mx-auto text-green-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                   <p className="text-silver-white font-bold text-lg">{fileName}</p>
+                   <p className="text-green-400 text-sm mt-1">Upload Complete!</p>
+                </div>
+              )}
+            </div>
+
+            {uploadStatus === 'success' && (
+              <motion.button
+                className="w-full mt-6 py-3 bg-gold text-cosmic-black font-bold rounded-lg shadow-lg hover:shadow-gold/50 transition-all"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                onClick={onClose}
+              >
+                Proceed to Dashboard
+              </motion.button>
+            )}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isUploadOpen, setIsUploadOpen] = useState(false); // New state for upload modal
+
   const { scrollY } = useScroll();
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.5]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -648,6 +787,7 @@ function App() {
               variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"
+              onClick={() => setIsUploadOpen(true)} // Trigger the file uploader
             >
               Start Cleaning Your Data
             </motion.button>
@@ -812,6 +952,7 @@ function App() {
           </div>
         </section>
 
+        <FileUploader isOpen={isUploadOpen} onClose={() => setIsUploadOpen(false)} />
         <HayChatbot />
       </main>
 
