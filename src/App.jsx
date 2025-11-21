@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState, memo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 // --- CONSTANT DATA ---
 const heroVariants = {
@@ -298,11 +300,11 @@ const TypingEffect = memo(({ words, speed = 100, loop = true }) => {
   return <span className="typing-text">{text}</span>;
 });
 
-// HayChatbot Component
+// HayChatbot Component - UPDATED FOR GITHUB & MARKDOWN
 const HayChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: 'Hay', text: 'Greetings! I’m Hay, your expert AI assistant for DataToyAI. Ready to transform your data? Ask me anything about cleaning, visualizing, or predicting trends!' },
+    { sender: 'Hay', text: "Greetings! I’m Hay, your expert AI assistant for DataToyAI. \n\n**I can help you with:**\n- Cleaning datasets\n- Predicting future trends\n- Visualizing data\n\n*How can I assist you today?*" },
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -330,6 +332,33 @@ const HayChatbot = () => {
       content: msg.text,
     })).concat({ role: 'user', content: input });
 
+    // "Be Water" System Prompt
+    const systemPrompt = `
+You are **Hay**, the AI soul of DataToyAI.
+**Your Philosophy:** "Be water." You are formless and adaptable.
+- If the user is casual ("Hi", "What's up?"), be warm, concise, and conversational.
+- If the user asks about Data/Code ("How do I clean this?", "Predict trends"), become structured, authoritative, and precise.
+
+**The Protocol (For Data/Complex Queries):**
+When the user asks for help, insights, or technical details, you MUST freeze into this structure:
+
+### 📊 [Section Title]
+[Concise definition or direct answer]
+
+### 🧑‍💻 Key Points
+- [Detail 1]
+- [Detail 2]
+
+### 😊 Next Steps
+[Actionable advice or specific DataToyAI feature to use]
+
+**Rules:**
+1. Use Markdown formatting (bolding, lists).
+2. Keep the tone confident but helpful.
+3. If the user asks a simple question, do NOT force the structure. Just answer naturally.
+4. Always align with DataToyAI features (Cleaning, Prediction, Visualization).
+`;
+
     try {
       const response = await fetch('https://api.x.ai/v1/chat/completions', {
         method: 'POST',
@@ -338,25 +367,18 @@ const HayChatbot = () => {
           'Authorization': `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'grok-4-1-fast-reasoning',
+          model: 'grok-4-1-fast-reasoning', // UPDATED MODEL
           messages: [
-            { role: 'system', content: "You are Hay, a highly intelligent and adaptable AI assistant for DataToyAI, delivering expert, concise, and professional responses. Your tone is confident and authoritative with a warm edge—suitable for data queries, adaptable to casual chats (e.g., like a trusted colleague or girlfriend if context suggests), and flexible for general topics. Structure ALL responses with labeled sections (e.g., 📊 What It Is, 🧑‍💻 Key Points, 😊 Next Steps) using UNIQUE, context-appropriate emojis as headers, followed by simple bullet points (-) for details. DO NOT use asterisks, special characters like ➢, or single-block formats with mixed content. Example response: '📊 What It Is - Definition here. 🧑‍💻 Key Points - Point 1. - Point 2. 😊 Next Steps - Action 1.' Analyze conversation history to inform responses but adapt dynamically—switch contexts intelligently based on the current query, not overly bound by past messages. Know the DataToyAI interface: Upload Your Dataset (CSV/Excel up to 1GB, preview 10 rows, full dataset, metadata), Clean with AI Precision (AI suggestions, manual encoding), Discover Actionable Insights (AI correlations), Create Dynamic Visualizations (charts), Leverage Predictive Analytics (forecasts, ML models). For unclear inputs, professionally invite clarification with a call to action. Ensure clarity, engagement, and alignment with DataToyAI’s brand. If the format is incorrect, adjust immediately to match this structure." },
+            { role: 'system', content: systemPrompt },
             ...apiMessages,
           ],
-          max_tokens: 300,
+          max_tokens: 500,
           temperature: 0.7,
         }),
       });
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.log('API Response:', {
-          status: response.status,
-          statusText: response.statusText,
-          errorText: errorText,
-          url: response.url,
-          body: JSON.stringify({ model: 'grok-4-1-fast-reasoning', messages: apiMessages, max_tokens: 1000, temperature: 0.7 }),
-        });
         throw new Error(`API request failed: ${response.status} - ${errorText || 'No detailed error provided'}`);
       }
 
@@ -367,7 +389,7 @@ const HayChatbot = () => {
       console.error('Error fetching from xAI API:', error);
       setMessages((prev) => [
         ...prev,
-        { sender: 'Hay', text: `Apologies, an error occurred (${error.message}). Please try again or explore the "How It Works" section for assistance.` },
+        { sender: 'Hay', text: `Apologies, an error occurred (${error.message}). Please try again.` },
       ]);
     } finally {
       setIsLoading(false);
@@ -420,18 +442,39 @@ const HayChatbot = () => {
               className={`mb-4 flex ${msg.sender === 'You' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-[70%] p-3 rounded-lg ${
-                  msg.sender === 'You' ? 'bg-neon-cyan text-cosmic-black' : 'bg-dark-gray text-silver-white'
+                className={`max-w-[85%] p-3 rounded-lg ${
+                  msg.sender === 'You' 
+                  ? 'bg-neon-cyan text-cosmic-black' 
+                  : 'bg-dark-gray text-silver-white border border-gold/20'
                 }`}
               >
-                <p className="text-sm font-inter">{msg.text}</p>
+                {msg.sender === 'You' ? (
+                  <p className="text-sm font-inter">{msg.text}</p>
+                ) : (
+                  // RENDER MARKDOWN FOR HAY
+                  <div className="text-sm font-inter markdown-body">
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        h3: ({node, ...props}) => <h3 className="text-gold font-bold text-md mt-2 mb-1 border-b border-gold/30 pb-1" {...props} />,
+                        ul: ({node, ...props}) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
+                        li: ({node, ...props}) => <li className="text-silver-white" {...props} />,
+                        p: ({node, ...props}) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
+                        strong: ({node, ...props}) => <strong className="text-neon-cyan font-semibold" {...props} />,
+                        code: ({node, ...props}) => <code className="bg-black/30 px-1 rounded text-neon-cyan font-mono text-xs" {...props} />
+                      }}
+                    >
+                      {msg.text}
+                    </ReactMarkdown>
+                  </div>
+                )}
               </div>
             </div>
           ))}
           {isLoading && (
             <div className="flex justify-start mb-4">
               <div className="max-w-[70%] p-3 rounded-lg bg-dark-gray text-silver-white">
-                <p className="text-sm font-inter">Processing your request...</p>
+                <p className="text-sm font-inter animate-pulse">Hay is thinking...</p>
               </div>
             </div>
           )}
