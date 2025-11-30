@@ -386,7 +386,7 @@ Use this when the user needs depth, tutorials, or long content.
             { role: 'system', content: systemPrompt },
             ...apiMessages,
           ],
-          max_tokens: 500,
+          max_tokens: 4096,
           temperature: 0.7,
         }),
       });
