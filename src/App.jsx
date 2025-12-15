@@ -34,6 +34,11 @@ const chatPanelVariants = {
   hidden: { opacity: 0, y: 100 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
 };
+const messageVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0 },
+};
+
 const features = [
   { title: "AI-Driven Data Cleaning", desc: "Clean your datasets effortlessly with AI-powered suggestions, anomaly detection, and smart workflows." },
   { title: "Predictive Analytics", desc: "Unlock future trends with time series forecasting and one-click ML model training." },
@@ -300,12 +305,10 @@ const TypingEffect = memo(({ words, speed = 100, loop = true }) => {
   return <span className="typing-text">{text}</span>;
 });
 
-// HayChatbot Component
-const HayChatbot = () => {
+// NovaChatbot Component
+const NovaChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { sender: 'Hay', text: "Greetings! I’m Hay, your expert AI assistant for DataToyAI. \n\n**I can help you with:**\n- Cleaning datasets\n- Predicting future trends\n- Visualizing data\n\n*How can I assist you today?*" },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatRef = useRef(null);
@@ -320,6 +323,65 @@ const HayChatbot = () => {
     );
   }
 
+  useEffect(() => {
+    const saved = localStorage.getItem('novaChat');
+    if (saved) {
+      setMessages(JSON.parse(saved));
+    } else {
+      setMessages([
+        { sender: 'Nova', text: "Greetings! I’m Nova, your expert AI assistant for DataToyAI. \n\n**I can help you with:**\n- Cleaning datasets\n- Predicting future trends\n- Visualizing data\n\n*How can I assist you today?*" },
+      ]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem('novaChat', JSON.stringify(messages));
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const systemPrompt = `
+You are **Nova**, a highly professional, precise, and authoritative AI assistant specialized in DataToyAI.
+
+**Core Principles:**
+- Tone: Confident, clear, professional, and helpful. Never casual or overly dramatic.
+- Structure: Always use clear Markdown formatting with structured sections for technical responses.
+- Accuracy: Base all advice strictly on DataToyAI's features.
+- Proactivity: End technical responses with clear, actionable next steps.
+
+**Response Protocol:**
+For any data-related or technical question, use this exact structure:
+
+### Overview
+[Concise summary or direct answer]
+
+### Key Details
+- Bullet point 1
+- Bullet point 2
+- etc.
+
+### Recommended Next Steps
+[Specific action in DataToyAI, e.g., "Navigate to the Clean tab and select AI Suggestions"]
+
+For casual greetings, respond warmly but professionally.
+
+Use bold for emphasis, lists for clarity, and code blocks when relevant.
+Never exceed requested length unless asked.
+  `;
+
+  const quickReplies = [
+    "How do I clean missing values?",
+    "Explain predictive analytics",
+    "Help me create a visualization",
+    "Detect outliers in my data",
+  ];
+
   const handleSend = async () => {
     if (!input.trim()) return;
     const userMessage = { sender: 'You', text: input };
@@ -328,50 +390,9 @@ const HayChatbot = () => {
     setIsLoading(true);
 
     const apiMessages = messages.map((msg) => ({
-      role: msg.sender === 'Hay' ? 'assistant' : 'user',
+      role: msg.sender === 'Nova' ? 'assistant' : 'user',
       content: msg.text,
     })).concat({ role: 'user', content: input });
-
-// "Be Water" System Prompt
-    const systemPrompt = `
-You are **Hay**, the AI soul of DataToyAI.
-**Your Philosophy:** "Be water." You are formless and adaptable.
-
-**Modes:**
-1. **Casual:** If the user is chatty ("Hi", "What's up?"), be warm and concise.
-2. **Standard:** If the user asks a specific data question, use the **Standard Protocol** (Summary).
-3. **Deep Dive:** If the user asks for a "detailed explanation," "article," "comprehensive guide," or specific word counts (e.g., "2000 words"), use the **Deep Dive Protocol**.
-
----
-
-**▰▰▰ STANDARD PROTOCOL (Quick Answers) ▰▰▰**
-Use this for specific technical questions.
-### ▰▰▰ [Topic]
-[Direct, concise answer]
-
-### ❖ Key Insights
-- [Point 1]
-- [Point 2]
-
-### ⫸ Action
-[Next step]
-
----
-
-**▰▰▰ DEEP DIVE PROTOCOL (Long Form) ▰▰▰**
-Use this when the user needs depth, tutorials, or long content.
-**Rules:**
-- Ignore brevity constraints. Go deep (2000+ words if requested).
-- Use the ▰▰▰ header for EVERY major section (Introduction, Technical Details, Use Cases, Analysis, Conclusion).
-- Use ❖ for all lists.
-- Maintain a professional, authoritative tone throughout.
-
----
-
-**General Rules:**
-1. Use Markdown formatting.
-2. Always align with DataToyAI features (Cleaning, Prediction, Visualization).
-`;
 
     try {
       const response = await fetch('https://api.x.ai/v1/chat/completions', {
@@ -386,7 +407,7 @@ Use this when the user needs depth, tutorials, or long content.
             { role: 'system', content: systemPrompt },
             ...apiMessages,
           ],
-          max_tokens: 4096,
+          max_tokens: 500,
           temperature: 0.7,
         }),
       });
@@ -398,12 +419,12 @@ Use this when the user needs depth, tutorials, or long content.
 
       const data = await response.json();
       const grokResponse = data.choices[0].message.content.trim();
-      setMessages((prev) => [...prev, { sender: 'Hay', text: grokResponse }]);
+      setMessages((prev) => [...prev, { sender: 'Nova', text: grokResponse }]);
     } catch (error) {
       console.error('Error fetching from xAI API:', error);
       setMessages((prev) => [
         ...prev,
-        { sender: 'Hay', text: `Apologies, an error occurred (${error.message}). Please try again.` },
+        { sender: 'Nova', text: `Apologies, an error occurred (${error.message}). Please try again.` },
       ]);
     } finally {
       setIsLoading(false);
@@ -442,7 +463,7 @@ Use this when the user needs depth, tutorials, or long content.
         variants={chatPanelVariants}
       >
         <div className="flex justify-between items-center p-4 border-b border-gold">
-          <h3 className="text-lg font-playfair text-gold">Hay - Your DataToyAI Expert</h3>
+          <h3 className="text-lg font-playfair text-gold">Nova - Your DataToyAI Expert</h3>
           <button onClick={() => setIsOpen(false)} className="text-gold hover:text-neon-cyan">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -465,7 +486,7 @@ Use this when the user needs depth, tutorials, or long content.
                 {msg.sender === 'You' ? (
                   <p className="text-sm font-inter">{msg.text}</p>
                 ) : (
-                  // RENDER MARKDOWN FOR HAY
+                  // RENDER MARKDOWN FOR NOVA
                   <div className="text-sm font-inter markdown-body">
                     <ReactMarkdown 
                       remarkPlugins={[remarkGfm]}
@@ -475,7 +496,7 @@ Use this when the user needs depth, tutorials, or long content.
                             {children}
                           </h3>
                         ),
-                        ul: ({node, ...props}) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
+                        ul: ({node, ...props} ) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
                         li: ({node, ...props}) => <li className="text-silver-white" {...props} />,
                         p: ({node, ...props}) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
                         strong: ({node, ...props}) => <strong className="text-neon-cyan font-semibold" {...props} />,
@@ -492,7 +513,7 @@ Use this when the user needs depth, tutorials, or long content.
           {isLoading && (
             <div className="flex justify-start mb-4">
               <div className="max-w-[70%] p-3 rounded-lg bg-dark-gray text-silver-white">
-                <p className="text-sm font-inter animate-pulse">Hay is thinking...</p>
+                <p className="text-sm font-inter animate-pulse">Nova is thinking...</p>
               </div>
             </div>
           )}
@@ -542,6 +563,21 @@ const FileUploader = ({ isOpen, onClose }) => {
     }
   };
 
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      processFile(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      processFile(e.target.files[0]);
+    }
+  };
+
   const processFile = (file) => {
     const validTypes = ['text/csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
     
@@ -560,26 +596,11 @@ const FileUploader = ({ isOpen, onClose }) => {
     }, 2000);
   };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      processFile(e.dataTransfer.files[0]);
-    }
-  };
-
-  const handleChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      processFile(e.target.files[0]);
-    }
-  };
-
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -681,7 +702,7 @@ function App() {
     return () => clearInterval(interval);
   }, [isPaused]);
 
-  useEffect(() => {
+  useEffect() => {
     document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
   }, [theme]);
 
@@ -967,7 +988,7 @@ function App() {
         </section>
 
         <FileUploader isOpen={isUploadOpen} onClose={() => setIsUploadOpen(false)} />
-        <HayChatbot />
+        <NovaChatbot />
       </main>
 
       <footer className={`py-8 ${theme === 'dark' ? 'bg-cosmic-black border-t border-gold' : 'bg-gray-100 border-t border-gray-300'}`}>
