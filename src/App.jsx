@@ -300,11 +300,11 @@ const TypingEffect = memo(({ words, speed = 100, loop = true }) => {
   return <span className="typing-text">{text}</span>;
 });
 
-// HayChatbot Component
-const HayChatbot = () => {
+// HexChatbot Component
+const HexChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: 'Hay', text: "Greetings! I’m Hay, your expert AI assistant for DataToyAI. \n\n**I can help you with:**\n- Cleaning datasets\n- Predicting future trends\n- Visualizing data\n\n*How can I assist you today?*" },
+    { sender: 'Hex', text: "Greetings! I’m Hex, your expert AI assistant for DataToyAI. \n\n**I can help you with:**\n- Cleaning datasets\n- Predicting future trends\n- Visualizing data\n\n*How can I assist you today?*" },
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -328,13 +328,13 @@ const HayChatbot = () => {
     setIsLoading(true);
 
     const apiMessages = messages.map((msg) => ({
-      role: msg.sender === 'Hay' ? 'assistant' : 'user',
+      role: msg.sender === 'Hex' ? 'assistant' : 'user',
       content: msg.text,
     })).concat({ role: 'user', content: input });
 
 // "Be Water" System Prompt
     const systemPrompt = `
-You are **Hay**, the AI soul of DataToyAI.
+You are **Hex**, the AI soul of DataToyAI.
 **Your Philosophy:** "Be water." You are formless and adaptable.
 
 **Modes:**
@@ -398,12 +398,12 @@ Use this when the user needs depth, tutorials, or long content.
 
       const data = await response.json();
       const grokResponse = data.choices[0].message.content.trim();
-      setMessages((prev) => [...prev, { sender: 'Hay', text: grokResponse }]);
+      setMessages((prev) => [...prev, { sender: 'Hex', text: grokResponse }]);
     } catch (error) {
       console.error('Error fetching from xAI API:', error);
       setMessages((prev) => [
         ...prev,
-        { sender: 'Hay', text: `Apologies, an error occurred (${error.message}). Please try again.` },
+        { sender: 'Hex', text: `Apologies, an error occurred (${error.message}). Please try again.` },
       ]);
     } finally {
       setIsLoading(false);
@@ -442,7 +442,7 @@ Use this when the user needs depth, tutorials, or long content.
         variants={chatPanelVariants}
       >
         <div className="flex justify-between items-center p-4 border-b border-gold">
-          <h3 className="text-lg font-playfair text-gold">Hay - Your DataToyAI Expert</h3>
+          <h3 className="text-lg font-playfair text-gold">Hex - Your DataToyAI Expert</h3>
           <button onClick={() => setIsOpen(false)} className="text-gold hover:text-neon-cyan">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -465,7 +465,7 @@ Use this when the user needs depth, tutorials, or long content.
                 {msg.sender === 'You' ? (
                   <p className="text-sm font-inter">{msg.text}</p>
                 ) : (
-                  // RENDER MARKDOWN FOR HAY
+                  // RENDER MARKDOWN FOR Hex
                   <div className="text-sm font-inter markdown-body">
                     <ReactMarkdown 
                       remarkPlugins={[remarkGfm]}
@@ -492,7 +492,7 @@ Use this when the user needs depth, tutorials, or long content.
           {isLoading && (
             <div className="flex justify-start mb-4">
               <div className="max-w-[70%] p-3 rounded-lg bg-dark-gray text-silver-white">
-                <p className="text-sm font-inter animate-pulse">Hay is thinking...</p>
+                <p className="text-sm font-inter animate-pulse">Hex is thinking...</p>
               </div>
             </div>
           )}
@@ -967,7 +967,7 @@ function App() {
         </section>
 
         <FileUploader isOpen={isUploadOpen} onClose={() => setIsUploadOpen(false)} />
-        <HayChatbot />
+        <HexChatbot />
       </main>
 
       <footer className={`py-8 ${theme === 'dark' ? 'bg-cosmic-black border-t border-gold' : 'bg-gray-100 border-t border-gray-300'}`}>
