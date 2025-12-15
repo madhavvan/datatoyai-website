@@ -702,7 +702,7 @@ function App() {
     return () => clearInterval(interval);
   }, [isPaused]);
 
-  useEffect() => {
+  useEffect(() => {
     document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
   }, [theme]);
 
