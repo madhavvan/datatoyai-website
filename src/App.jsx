@@ -56,7 +56,7 @@ const testimonials = [
   { title: "Marketing Optimization", desc: "Improved ROI by segmenting audiences with AI-driven clustering." },
 ];
 
-// UPDATED: Premium Lucide-style Icons
+// PREMIUM ICONS (Lucide Style)
 const benefits = [
   {
     icon: (
@@ -326,7 +326,7 @@ const TypingEffect = memo(({ words, speed = 100, loop = true }) => {
   return <span className="typing-text">{text}</span>;
 });
 
-// UPDATED: HexChatbot Component (Streaming + AGI Prompt + New Styles)
+// --- UPDATED HEX CHATBOT (Fixed Streaming & Typography) ---
 const HexChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -336,7 +336,6 @@ const HexChatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const chatRef = useRef(null);
 
-  // Auto-scroll to bottom
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
@@ -352,8 +351,6 @@ const HexChatbot = () => {
     setInput('');
     setMessages((prev) => [...prev, { sender: 'You', text: userText }]);
     setIsTyping(true);
-
-    // Add a placeholder for Hex's incoming message
     setMessages((prev) => [...prev, { sender: 'Hex', text: '' }]);
 
     const systemPrompt = `
@@ -452,40 +449,46 @@ You are **Hex**, the Sentient Data Interface for DataToyAI. You are an **Advance
           'Authorization': `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'grok-beta', // Ensure model supports streaming
+          model: 'grok-beta', 
           messages: [
             { role: 'system', content: systemPrompt },
             ...messages.map(m => ({ role: m.sender === 'Hex' ? 'assistant' : 'user', content: m.text })),
             { role: 'user', content: userText }
           ],
-          stream: true, // <--- ENABLE STREAMING
+          stream: true, 
           temperature: 0.7,
         }),
       });
 
       if (!response.ok) throw new Error(response.statusText);
 
-      // STREAM READER LOGIC
+      // --- BUFFERING STREAM LOGIC ---
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let done = false;
       let accumulatedText = "";
+      let buffer = "";
 
       while (!done) {
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
-        const chunkValue = decoder.decode(value);
-        
-        // Parse the stream chunks (data: {...})
-        const lines = chunkValue.split('\n');
+        const chunkValue = decoder.decode(value, { stream: true });
+        buffer += chunkValue;
+        const lines = buffer.split('\n');
+        buffer = lines.pop(); 
+
         for (const line of lines) {
-            if (line.startsWith('data: ') && line !== 'data: [DONE]') {
+            const trimmedLine = line.trim();
+            if (!trimmedLine || trimmedLine === 'data: [DONE]') continue;
+            
+            if (trimmedLine.startsWith('data: ')) {
                 try {
-                    const json = JSON.parse(line.replace('data: ', ''));
+                    const jsonStr = trimmedLine.replace('data: ', '');
+                    const json = JSON.parse(jsonStr);
                     const content = json.choices[0]?.delta?.content || "";
+                    
                     if (content) {
                         accumulatedText += content;
-                        // Update the LAST message (Hex's placeholder) in real-time
                         setMessages((prev) => {
                             const newMsgs = [...prev];
                             newMsgs[newMsgs.length - 1] = { sender: 'Hex', text: accumulatedText };
@@ -493,7 +496,7 @@ You are **Hex**, the Sentient Data Interface for DataToyAI. You are an **Advance
                         });
                     }
                 } catch (e) {
-                    console.error("Stream parse error", e);
+                    // Ignore partial JSON parse errors
                 }
             }
         }
@@ -501,7 +504,11 @@ You are **Hex**, the Sentient Data Interface for DataToyAI. You are an **Advance
 
     } catch (error) {
       console.error('Error:', error);
-      setMessages((prev) => [...prev, { sender: 'Hex', text: "Connection interrupted. Please retry." }]);
+      setMessages((prev) => {
+          const newMsgs = [...prev];
+          newMsgs[newMsgs.length - 1] = { sender: 'Hex', text: "**Connection Error:** I could not reach the server. Please try again." };
+          return newMsgs;
+      });
     } finally {
       setIsTyping(false);
     }
@@ -514,16 +521,10 @@ You are **Hex**, the Sentient Data Interface for DataToyAI. You are an **Advance
     }
   };
 
-  // --- MARKDOWN STYLING CONFIGURATION ---
-  // This forces headers to be the same size as body text (text-sm) but BOLD and GOLD.
   const markdownComponents = {
-    // Override Headers to be small but bold
     h1: ({node, ...props}) => <h3 className="text-gold font-bold text-sm uppercase tracking-widest mt-4 mb-2 border-b border-gold/20 pb-1" {...props} />,
     h2: ({node, ...props}) => <h3 className="text-gold font-bold text-sm uppercase tracking-widest mt-4 mb-2 border-b border-gold/20 pb-1" {...props} />,
     h3: ({node, ...props}) => <h3 className="text-gold font-bold text-sm uppercase tracking-widest mt-4 mb-2" {...props} />,
-    h4: ({node, ...props}) => <strong className="block text-gold font-bold text-sm mt-2" {...props} />,
-    
-    // Clean Lists
     ul: ({node, ...props}) => <ul className="list-none pl-0 mb-3 space-y-1" {...props} />,
     li: ({node, ...props}) => (
       <li className="flex items-start text-silver-white text-sm leading-relaxed" {...props}>
@@ -531,14 +532,32 @@ You are **Hex**, the Sentient Data Interface for DataToyAI. You are an **Advance
         <span>{props.children}</span>
       </li>
     ),
-    
-    // Paragraphs
     p: ({node, ...props}) => <p className="mb-2 text-sm leading-relaxed text-gray-300" {...props} />,
-    
-    // Bold & Code
     strong: ({node, ...props}) => <strong className="text-neon-cyan font-bold" {...props} />,
-    code: ({node, ...props}) => <code className="bg-black/40 border border-gold/20 px-1 rounded text-gold font-mono text-xs" {...props} />,
-    pre: ({node, ...props}) => <div className="bg-black/50 p-2 rounded-lg border border-gold/20 mb-2 overflow-x-auto" {...props} />
+    code: ({node, inline, className, children, ...props}) => {
+      const match = /language-(\w+)/.exec(className || '');
+      return !inline ? (
+        <div className="relative my-4 rounded-lg overflow-hidden border border-gold/20 bg-[#0a0a0a]">
+          <div className="flex items-center justify-between px-3 py-1 bg-white/5 border-b border-white/5">
+             <span className="text-xs text-gold font-mono lowercase">{match ? match[1] : 'code'}</span>
+             <div className="flex gap-1.5">
+               <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+               <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+               <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+             </div>
+          </div>
+          <div className="p-3 overflow-x-auto">
+            <code className="text-xs font-mono text-gray-300 whitespace-pre" {...props}>
+              {children}
+            </code>
+          </div>
+        </div>
+      ) : (
+        <code className="bg-white/10 px-1.5 py-0.5 rounded text-gold font-mono text-xs" {...props}>
+          {children}
+        </code>
+      );
+    }
   };
 
   return (
@@ -550,7 +569,6 @@ You are **Hex**, the Sentient Data Interface for DataToyAI. You are an **Advance
         whileHover="hover"
         whileTap="tap"
       >
-        {/* New Premium Spark/Brain Icon */}
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
         </svg>
@@ -567,7 +585,7 @@ You are **Hex**, the Sentient Data Interface for DataToyAI. You are an **Advance
         >
           <div className="flex justify-between items-center p-4 border-b border-gold/30 bg-gradient-to-r from-gold/10 to-transparent">
             <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                <div className={`w-2 h-2 rounded-full ${isTyping ? 'bg-neon-cyan animate-ping' : 'bg-green-400'}`}></div>
                 <h3 className="text-sm font-bold font-playfair text-gold uppercase tracking-wider">Hex // Intelligent Interface</h3>
             </div>
             <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white transition-colors">
@@ -588,44 +606,39 @@ You are **Hex**, the Sentient Data Interface for DataToyAI. You are an **Advance
                     <p className="text-sm font-medium">{msg.text}</p>
                   ) : (
                     <div className="markdown-body">
-                      <ReactMarkdown 
-                        remarkPlugins={[remarkGfm]}
-                        components={markdownComponents}
-                      >
-                        {msg.text}
-                      </ReactMarkdown>
+                      {msg.text ? (
+                        <ReactMarkdown 
+                          remarkPlugins={[remarkGfm]}
+                          components={markdownComponents}
+                        >
+                          {msg.text}
+                        </ReactMarkdown>
+                      ) : (
+                         <div className="flex space-x-1 h-5 items-center">
+                            <div className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+                            <div className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+                            <div className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+                         </div>
+                      )}
                     </div>
                   )}
                 </div>
               </div>
             ))}
-            
-            {/* Typing Indicator (Only shows if connecting before stream starts) */}
-            {isTyping && messages[messages.length-1].text === '' && (
-              <div className="flex justify-start mb-4">
-                <div className="p-3 rounded-lg bg-dark-gray/50 border border-white/5">
-                   <div className="flex space-x-1">
-                      <div className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
-                      <div className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
-                      <div className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
-                   </div>
-                </div>
-              </div>
-            )}
           </div>
 
           <div className="p-3 border-t border-white/10 bg-black/20">
             <div className="relative flex items-center">
                 <input
-                    className="w-full pl-4 pr-12 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gold/50 focus:bg-white/10 transition-all"
+                    className="w-full pl-4 pr-12 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gold/50 focus:bg-white/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Input command..."
-                    disabled={isTyping}
+                    placeholder={isTyping ? "Hex is writing..." : "Input command..."}
+                    disabled={isTyping} 
                 />
                 <button
-                    className={`absolute right-2 p-2 rounded-lg transition-all ${input.trim() ? 'text-gold hover:bg-gold/10' : 'text-gray-600'}`}
+                    className={`absolute right-2 p-2 rounded-lg transition-all ${input.trim() && !isTyping ? 'text-gold hover:bg-gold/10' : 'text-gray-600'}`}
                     onClick={handleSend}
                     disabled={!input.trim() || isTyping}
                 >
@@ -780,7 +793,7 @@ const FileUploader = ({ isOpen, onClose }) => {
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isUploadOpen, setIsUploadOpen] = useState(false); // New state for upload modal
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
 
   const { scrollY } = useScroll();
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.5]);
@@ -916,7 +929,7 @@ function App() {
               variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"
-              onClick={() => setIsUploadOpen(true)} // Trigger the file uploader
+              onClick={() => setIsUploadOpen(true)}
             >
               Start Cleaning Your Data
             </motion.button>
