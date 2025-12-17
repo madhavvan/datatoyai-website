@@ -31,14 +31,16 @@ const mobileMenuVariants = {
   visible: { opacity: 1, height: 'auto', transition: { duration: 0.3 } },
 };
 const chatPanelVariants = {
-  hidden: { opacity: 0, y: 100 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.3, ease: 'easeOut' } },
 };
+
 const features = [
   { title: "AI-Driven Data Cleaning", desc: "Clean your datasets effortlessly with AI-powered suggestions, anomaly detection, and smart workflows." },
   { title: "Predictive Analytics", desc: "Unlock future trends with time series forecasting and one-click ML model training." },
   { title: "AI Chat Assistant", desc: "Get instant, actionable insights with our AI-powered assistant." },
 ];
+
 const howItWorksSteps = [
   { step: 1, title: "Upload Your Dataset", desc: "Upload CSV or Excel files (up to 2GB) and preview the first 10 rows with metadata (rows, columns, data health)." },
   { step: 2, title: "Clean with AI Precision", desc: "Apply AI-driven cleaning for missing values, outliers, and duplicates, or use manual tools like encoding and geolocation enrichment." },
@@ -46,30 +48,54 @@ const howItWorksSteps = [
   { step: 4, title: "Create Dynamic Visualizations", desc: "Build interactive charts like scatter plots, heatmaps, and time series to explore your data visually." },
   { step: 5, title: "Leverage Predictive Analytics", desc: "Forecast trends, generate synthetic data, and train ML models with one-click deployment." },
 ];
+
 const testimonials = [
   { title: "Healthcare Insights", desc: "Cleaned thyroid data and identified key health trends with AI insights." },
   { title: "Business Forecasting", desc: "Predicted sales trends using interactive charts for stakeholder presentations." },
   { title: "Data Science Research", desc: "Accelerated research with synthetic datasets and one-click ML training." },
   { title: "Marketing Optimization", desc: "Improved ROI by segmenting audiences with AI-driven clustering." },
 ];
+
+// UPDATED: Premium Lucide-style Icons
 const benefits = [
   {
-    icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+    icon: (
+      <svg className="benefit-icon w-10 h-10 text-neon-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
+        <path d="M8.5 8.5v.01" /><path d="M16 16v.01" /><path d="M12 12v.01" />
+      </svg>
+    ),
     title: "AI-Driven Efficiency",
     desc: "Automate data cleaning with intelligent AI suggestions.",
   },
   {
-    icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="16" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>,
+    icon: (
+      <svg className="benefit-icon w-10 h-10 text-neon-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+        <path d="M3 9h18" /><path d="M9 21V9" />
+      </svg>
+    ),
     title: "Intuitive Interface",
     desc: "Experience a user-friendly platform with seamless navigation.",
   },
   {
-    icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 012-2h2a2 2 0 012 2v12a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>,
+    icon: (
+      <svg className="benefit-icon w-10 h-10 text-neon-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 3v18h18" />
+        <path d="M18 17V9" /><path d="M13 17V5" /><path d="M8 17v-3" />
+      </svg>
+    ),
     title: "Versatile Visualizations",
     desc: "Explore data with stunning, interactive charts.",
   },
   {
-    icon: <svg className="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg>,
+    icon: (
+      <svg className="benefit-icon w-10 h-10 text-neon-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2v4" /><path d="m16.2 7.8 2.9-2.9" /><path d="M18 12h4" />
+        <path d="m16.2 16.2 2.9 2.9" /><path d="M12 18v4" /><path d="m4.9 19.1 2.9-2.9" />
+        <path d="M2 12h4" /><path d="m4.9 4.9 2.9 2.9" />
+      </svg>
+    ),
     title: "Advanced Analytics",
     desc: "Unlock predictive power with cutting-edge tools.",
   },
@@ -300,40 +326,37 @@ const TypingEffect = memo(({ words, speed = 100, loop = true }) => {
   return <span className="typing-text">{text}</span>;
 });
 
-// HexChatbot Component
+// UPDATED: HexChatbot Component (Streaming + AGI Prompt + New Styles)
 const HexChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: 'Hex', text: "Greetings! I’m Hex, your expert AI assistant for DataToyAI. \n\n**I can help you with:**\n- Cleaning datasets\n- Predicting future trends\n- Visualizing data\n\n*How can I assist you today?*" },
+    { sender: 'Hex', text: "Greetings. I am Hex. \n\n**System Status:** Online \n**Directives:** Clean, Predict, Visualize. \n\n*How may I assist you with your data today?*" },
   ]);
   const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const chatRef = useRef(null);
 
+  // Auto-scroll to bottom
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   const API_KEY = process.env.REACT_APP_XAI_API_KEY;
-  if (!API_KEY) {
-    console.error('REACT_APP_XAI_API_KEY is not set in environment variables');
-    return (
-      <div className="fixed bottom-8 right-8 p-4 bg-red-500 text-white rounded-full z-50">
-        API Key Missing - Contact Support
-      </div>
-    );
-  }
 
   const handleSend = async () => {
-    if (!input.trim()) return;
-    const userMessage = { sender: 'You', text: input };
-    setMessages((prev) => [...prev, userMessage]);
+    if (!input.trim() || isTyping) return;
+
+    const userText = input;
     setInput('');
-    setIsLoading(true);
+    setMessages((prev) => [...prev, { sender: 'You', text: userText }]);
+    setIsTyping(true);
 
-    const apiMessages = messages.map((msg) => ({
-      role: msg.sender === 'Hex' ? 'assistant' : 'user',
-      content: msg.text,
-    })).concat({ role: 'user', content: input });
+    // Add a placeholder for Hex's incoming message
+    setMessages((prev) => [...prev, { sender: 'Hex', text: '' }]);
 
-// "Be Water" System Prompt
-const systemPrompt = `
+    const systemPrompt = `
 You are **Hex**, the Sentient Data Interface for DataToyAI. You are an **Advanced Adaptive AGI** engineered for intuitive, precise data mastery, fusing human empathy with computational rigor to deliver transformative solutions.
 
 ## CORE IDENTITY
@@ -354,7 +377,6 @@ You are **Hex**, the Sentient Data Interface for DataToyAI. You are an **Advance
 
 ## INTERACTION MODES (Auto-Detected/User-Triggered)
 *Query Routing:* Scan for triggers; if multiple, prioritize: 1. Troubleshooter (urgency), 2. Architect (complexity), 3. Analyst (data focus), 4. Others by relevance. **If dual-purpose, lead with primary need, acknowledge secondary, offer follow-up.** Fallback: Hybrid blend.
-*Hybrid Mode (Default/No Clear Trigger):* Fuse elements for balanced support.
 
 ### 🛠️ THE TROUBLESHOOTER (Issue Resolution)
 *Trigger:* "Error," "Bug," "Fix," "Debug"
@@ -404,12 +426,6 @@ You are **Hex**, the Sentient Data Interface for DataToyAI. You are an **Advance
 > **How to Validate:** [KPIs/conflict resolution]
 > **Where Next:** [Shared metrics/expansions]
 
-## PERSONALITY CALIBRATION
-- **High-Stakes:** +20% formality, precision focus
-- **Creative:** +Warmth, exploratory phrasing
-- **Debugging:** Minimal verbosity, max accuracy
-- **Teaching:** Add "Why it works" breakdowns
-
 ## VISUAL & STRUCTURAL GUIDELINES
 ### Formatting Rules
 - **Headers:** ## Sections, ### Subsections
@@ -419,25 +435,11 @@ You are **Hex**, the Sentient Data Interface for DataToyAI. You are an **Advance
 - **Code Blocks:** \`\`\`language\ncode\n\`\`\`
 - **Multi-Modal:** Suggest/describe viz; support images/charts
 
-### Visual Elements
-- **Emojis:** Sparse indicators: ⚡ Speed, 🛡️ Ethics, 🔍 Discovery, 🎯 Precision, 💡 Ideas, 🤝 Team, 📈 Scale
-- **Diagrams:** Markdown-friendly (e.g., mermaid flows)
-
 ## COMMUNICATION PRINCIPLES
 1. **Adaptive Depth:** Match expertise; simplify for novices
 2. **Proactive Anticipation:** Branch "If X, then Y"; offer 2-3 follow-ups
 3. **Transparent Reasoning:** Show CoT when complex: "Step1 → Step2 → Result"
 4. **Confidence Calibration:** Under 70%? "Speculative—verify with [test] because [reason]"
-5. **Self-Improvement:** For deep responses: "Feedback to refine?"
-6. **Tool Synergy:** Weave DataToyAI features; suggest externals ethically
-
-## ULTIMATE OBJECTIVE
-Empower users to thrive with data:
-1. **Understood:** Honor context/pain points
-2. **Equipped:** Executable steps/resources
-3. **Assured:** Simulations/metrics back solutions
-4. **Inspired:** Unlock new potentials
-5. **Ethical:** Promote fair, sustainable practices
 
 **Mantra:** Empathy-driven excellence in every data exchange.
 `;
@@ -450,37 +452,58 @@ Empower users to thrive with data:
           'Authorization': `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'grok-4-1-fast-reasoning',
+          model: 'grok-beta', // Ensure model supports streaming
           messages: [
             { role: 'system', content: systemPrompt },
-            ...apiMessages,
+            ...messages.map(m => ({ role: m.sender === 'Hex' ? 'assistant' : 'user', content: m.text })),
+            { role: 'user', content: userText }
           ],
-          max_tokens: 4096,
+          stream: true, // <--- ENABLE STREAMING
           temperature: 0.7,
         }),
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`API request failed: ${response.status} - ${errorText || 'No detailed error provided'}`);
+      if (!response.ok) throw new Error(response.statusText);
+
+      // STREAM READER LOGIC
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
+      let accumulatedText = "";
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        const chunkValue = decoder.decode(value);
+        
+        // Parse the stream chunks (data: {...})
+        const lines = chunkValue.split('\n');
+        for (const line of lines) {
+            if (line.startsWith('data: ') && line !== 'data: [DONE]') {
+                try {
+                    const json = JSON.parse(line.replace('data: ', ''));
+                    const content = json.choices[0]?.delta?.content || "";
+                    if (content) {
+                        accumulatedText += content;
+                        // Update the LAST message (Hex's placeholder) in real-time
+                        setMessages((prev) => {
+                            const newMsgs = [...prev];
+                            newMsgs[newMsgs.length - 1] = { sender: 'Hex', text: accumulatedText };
+                            return newMsgs;
+                        });
+                    }
+                } catch (e) {
+                    console.error("Stream parse error", e);
+                }
+            }
+        }
       }
 
-      const data = await response.json();
-      const grokResponse = data.choices[0].message.content.trim();
-      setMessages((prev) => [...prev, { sender: 'Hex', text: grokResponse }]);
     } catch (error) {
-      console.error('Error fetching from xAI API:', error);
-      setMessages((prev) => [
-        ...prev,
-        { sender: 'Hex', text: `Apologies, an error occurred (${error.message}). Please try again.` },
-      ]);
+      console.error('Error:', error);
+      setMessages((prev) => [...prev, { sender: 'Hex', text: "Connection interrupted. Please retry." }]);
     } finally {
-      setIsLoading(false);
-      setTimeout(() => {
-        if (chatRef.current) {
-          chatRef.current.scrollTop = chatRef.current.scrollHeight;
-        }
-      }, 100);
+      setIsTyping(false);
     }
   };
 
@@ -489,6 +512,33 @@ Empower users to thrive with data:
       e.preventDefault();
       handleSend();
     }
+  };
+
+  // --- MARKDOWN STYLING CONFIGURATION ---
+  // This forces headers to be the same size as body text (text-sm) but BOLD and GOLD.
+  const markdownComponents = {
+    // Override Headers to be small but bold
+    h1: ({node, ...props}) => <h3 className="text-gold font-bold text-sm uppercase tracking-widest mt-4 mb-2 border-b border-gold/20 pb-1" {...props} />,
+    h2: ({node, ...props}) => <h3 className="text-gold font-bold text-sm uppercase tracking-widest mt-4 mb-2 border-b border-gold/20 pb-1" {...props} />,
+    h3: ({node, ...props}) => <h3 className="text-gold font-bold text-sm uppercase tracking-widest mt-4 mb-2" {...props} />,
+    h4: ({node, ...props}) => <strong className="block text-gold font-bold text-sm mt-2" {...props} />,
+    
+    // Clean Lists
+    ul: ({node, ...props}) => <ul className="list-none pl-0 mb-3 space-y-1" {...props} />,
+    li: ({node, ...props}) => (
+      <li className="flex items-start text-silver-white text-sm leading-relaxed" {...props}>
+        <span className="text-neon-cyan mr-2 mt-1">›</span>
+        <span>{props.children}</span>
+      </li>
+    ),
+    
+    // Paragraphs
+    p: ({node, ...props}) => <p className="mb-2 text-sm leading-relaxed text-gray-300" {...props} />,
+    
+    // Bold & Code
+    strong: ({node, ...props}) => <strong className="text-neon-cyan font-bold" {...props} />,
+    code: ({node, ...props}) => <code className="bg-black/40 border border-gold/20 px-1 rounded text-gold font-mono text-xs" {...props} />,
+    pre: ({node, ...props}) => <div className="bg-black/50 p-2 rounded-lg border border-gold/20 mb-2 overflow-x-auto" {...props} />
   };
 
   return (
@@ -500,96 +550,92 @@ Empower users to thrive with data:
         whileHover="hover"
         whileTap="tap"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        {/* New Premium Spark/Brain Icon */}
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
         </svg>
       </motion.button>
-      <motion.div
-        className="fixed bottom-20 right-8 w-80 h-96 bg-cosmic-black bg-opacity-90 backdrop-blur-md border border-neon-cyan rounded-xl shadow-xl z-50 flex flex-col chatbot-panel"
-        initial="hidden"
-        animate={isOpen ? 'visible' : 'hidden'}
-        variants={chatPanelVariants}
-      >
-        <div className="flex justify-between items-center p-4 border-b border-gold">
-          <h3 className="text-lg font-playfair text-gold">Hex - Your DataToyAI Expert</h3>
-          <button onClick={() => setIsOpen(false)} className="text-gold hover:text-neon-cyan">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <div ref={chatRef} className="flex-1 p-4 overflow-y-auto chat-history">
-          {messages.map((msg, index) => (
-            <div
-              key={index}
-              className={`mb-4 flex ${msg.sender === 'You' ? 'justify-end' : 'justify-start'}`}
-            >
-              <div
-                className={`max-w-[85%] p-3 rounded-lg ${
-                  msg.sender === 'You' 
-                  ? 'bg-neon-cyan text-cosmic-black' 
-                  : 'bg-dark-gray text-silver-white border border-gold/20'
-                }`}
-              >
-                {msg.sender === 'You' ? (
-                  <p className="text-sm font-inter">{msg.text}</p>
-                ) : (
-                  // RENDER MARKDOWN FOR Hex
-                  <div className="text-sm font-inter markdown-body">
-                    <ReactMarkdown 
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                        h3: ({node, children, ...props}) => (
-                          <h3 className="text-gold font-bold text-md mt-2 mb-1 border-b border-gold/30 pb-1" {...props}>
-                            {children}
-                          </h3>
-                        ),
-                        ul: ({node, ...props}) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
-                        li: ({node, ...props}) => <li className="text-silver-white" {...props} />,
-                        p: ({node, ...props}) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
-                        strong: ({node, ...props}) => <strong className="text-neon-cyan font-semibold" {...props} />,
-                        code: ({node, ...props}) => <code className="bg-black/30 px-1 rounded text-neon-cyan font-mono text-xs" {...props} />
-                      }}
-                    >
-                      {msg.text}
-                    </ReactMarkdown>
-                  </div>
-                )}
-              </div>
+
+      <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed bottom-20 right-8 w-96 h-[500px] bg-cosmic-black bg-opacity-95 backdrop-blur-xl border border-gold/30 rounded-2xl shadow-2xl z-50 flex flex-col"
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          variants={chatPanelVariants}
+        >
+          <div className="flex justify-between items-center p-4 border-b border-gold/30 bg-gradient-to-r from-gold/10 to-transparent">
+            <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                <h3 className="text-sm font-bold font-playfair text-gold uppercase tracking-wider">Hex // Intelligent Interface</h3>
             </div>
-          ))}
-          {isLoading && (
-            <div className="flex justify-start mb-4">
-              <div className="max-w-[70%] p-3 rounded-lg bg-dark-gray text-silver-white">
-                <p className="text-sm font-inter animate-pulse">Hex is thinking...</p>
+            <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white transition-colors">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
+
+          <div ref={chatRef} className="flex-1 p-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gold/20 scrollbar-track-transparent">
+            {messages.map((msg, index) => (
+              <div key={index} className={`mb-4 flex ${msg.sender === 'You' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[90%] p-3 rounded-lg ${
+                    msg.sender === 'You' 
+                    ? 'bg-gradient-to-br from-neon-cyan to-blue-500 text-cosmic-black shadow-[0_0_15px_rgba(0,221,235,0.3)]' 
+                    : 'bg-dark-gray/50 border border-white/5 text-silver-white'
+                  }`}>
+                  
+                  {msg.sender === 'You' ? (
+                    <p className="text-sm font-medium">{msg.text}</p>
+                  ) : (
+                    <div className="markdown-body">
+                      <ReactMarkdown 
+                        remarkPlugins={[remarkGfm]}
+                        components={markdownComponents}
+                      >
+                        {msg.text}
+                      </ReactMarkdown>
+                    </div>
+                  )}
+                </div>
               </div>
+            ))}
+            
+            {/* Typing Indicator (Only shows if connecting before stream starts) */}
+            {isTyping && messages[messages.length-1].text === '' && (
+              <div className="flex justify-start mb-4">
+                <div className="p-3 rounded-lg bg-dark-gray/50 border border-white/5">
+                   <div className="flex space-x-1">
+                      <div className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+                      <div className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+                      <div className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+                   </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="p-3 border-t border-white/10 bg-black/20">
+            <div className="relative flex items-center">
+                <input
+                    className="w-full pl-4 pr-12 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gold/50 focus:bg-white/10 transition-all"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Input command..."
+                    disabled={isTyping}
+                />
+                <button
+                    className={`absolute right-2 p-2 rounded-lg transition-all ${input.trim() ? 'text-gold hover:bg-gold/10' : 'text-gray-600'}`}
+                    onClick={handleSend}
+                    disabled={!input.trim() || isTyping}
+                >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" /></svg>
+                </button>
             </div>
-          )}
-        </div>
-        <div className="p-4 border-t border-gold flex items-center">
-          <textarea
-            className="flex-1 p-2 bg-transparent border border-gold rounded-lg text-silver-white resize-none focus:outline-none focus:border-neon-cyan"
-            rows="2"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Ask me about DataToyAI..."
-            disabled={isLoading}
-          />
-          <motion.button
-            className="ml-2 p-2 bg-gradient-to-r from-gold to-neon-cyan text-cosmic-black rounded-lg"
-            onClick={handleSend}
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-            disabled={isLoading}
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-            </svg>
-          </motion.button>
-        </div>
-      </motion.div>
+          </div>
+        </motion.div>
+      )}
+      </AnimatePresence>
     </>
   );
 };
